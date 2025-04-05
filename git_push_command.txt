@@ -1,0 +1,13 @@
+git init
+git add .
+git commit -m "new files"
+git remote add origin https://github.com/YilinZhao6/aec_frontend_experimental.git
+git push origin main --force
+
+
+
+git init
+git add .
+git commit -m "new files"
+git remote add origin https://github.com/YilinZhao6/aec_frontend_beta.git
+git push origin main --force

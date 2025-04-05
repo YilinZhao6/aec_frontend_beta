@@ -1,0 +1,204 @@
+.markdown-content {
+  color: #000000;
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17.25px;
+  line-height: 1.4;
+  letter-spacing: 0.15px;
+}
+
+.markdown-content h1 {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 18.4px;
+  margin-top: 27.6px;
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 9.2px;
+  line-height: 1.2;
+  color: #000000;
+}
+
+.markdown-content h2 {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16.1px;
+  margin-top: 23px;
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 6.9px;
+  line-height: 1.2;
+  color: #000000;
+}
+
+.markdown-content h3 {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 13.8px;
+  margin-top: 20.7px;
+  line-height: 1.2;
+  color: #000000;
+}
+
+.markdown-content p {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  margin-bottom: 13.8px;
+  margin-top: 0;
+  line-height: 1.4;
+  color: #000000;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17.25px;
+  margin-bottom: 13.8px;
+  margin-top: 0;
+  padding-left: 2.3em;
+  line-height: 1.4;
+  color: #000000;
+}
+
+.markdown-content li {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17.25px;
+  margin-bottom: 4.6px;
+  line-height: 1.4;
+  color: #000000;
+}
+
+.markdown-content img {
+  max-width: 115%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.markdown-content figure {
+  width: 115%;
+  margin: 1.15rem 0;
+  padding: 11.5px;
+  border: 11.5px solid #A0A0A0;
+  background-color: #F2F2F2;
+}
+
+.markdown-content figcaption {
+  text-align: center;
+  font-family: var(--accent-font);
+  font-size: 17.25px;
+}
+
+.markdown-content blockquote {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 17.25px;
+  border-left: 4.6px solid #dfe2e5;
+  color: #6a737d;
+  margin-bottom: 13.8px;
+  margin-top: 0;
+  padding-left: 18.4px;
+  line-height: 1.4;
+}
+
+.markdown-content code {
+  font-family: "JetBrains Mono", Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace;
+  font-size: 14.95px;
+  padding: 0.23em 0.46em;
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 3.45px;
+}
+
+.markdown-content pre {
+  padding: 18.4px;
+  overflow: auto;
+  font-size: 14.95px;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 3.45px;
+  margin-bottom: 13.8px;
+  margin-top: 0;
+}
+
+.markdown-content pre code {
+  padding: 0;
+  font-size: inherit;
+  background-color: transparent;
+}
+
+.katex-display > .katex {
+  font-size: 0.9775em !important;
+}
+
+.katex {
+  font-size: 1.265em !important;
+}
+
+li .katex {
+  font-size: 1.265em !important;
+}
+
+.katex .math {
+  font-family: 'STIX Two Math', KaTeX_Math !important;
+  font-style: italic !important;
+  font-feature-settings: "ss01" 1;
+}
+
+.katex .mathit,
+.katex .mathnormal,
+.katex .mathdefault {
+  font-family: KaTeX_Math, 'STIX Two Math' !important;
+  font-style: italic !important;
+  font-feature-settings: "ss01" 1;
+}
+
+.katex .mord {
+  font-family: KaTeX_Main, 'STIX Two Math' !important;
+  font-feature-settings: "ss01" 1;
+}
+
+.katex .mord.mtight,
+.katex .mord.text,
+.katex .mord.text > .text,
+.katex .mord.text > span[class*="mathtt"],
+.katex .mord.text > span[class*="mathsf"],
+.katex .mord.text > span[class*="mathrm"],
+.katex .mord.text.mtight,
+.katex .mord.text > span[class*="mathord"] {
+  font-style: normal !important;
+}
+
+::-webkit-scrollbar {
+  width: 9.2px;
+  height: 9.2px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F0F0F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #A0A0A0;
+  border-radius: 4.6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6C757D;
+}
+
+.markdown-bottom-bar {
+  font-family: "Quicksand", sans-serif;
+  font-size: 13.524px;
+}
+
+.mermaid svg {
+  display: block !important;
+  max-width: 115%;
+  height: auto;
+}
+
+.mermaid:has(svg) {
+  background-color: transparent !important;
+}
+
+.mermaid:has(svg) .language-mermaid {
+  display: none !important;
+}
