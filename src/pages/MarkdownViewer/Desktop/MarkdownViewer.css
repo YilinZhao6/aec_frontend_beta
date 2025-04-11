@@ -1,0 +1,708 @@
+/* Base styles */
+.markdown-content {
+  color: #000000;
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
+  letter-spacing: 0.15px;
+  padding-top: 10px;
+}
+
+/* Headings */
+.markdown-content h1 {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 18.4px;
+  margin-top: 27.6px;
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 9.2px;
+  line-height: 1.2;
+  color: #000000;
+}
+
+.markdown-content h2 {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16.1px;
+  margin-top: 23px;
+  border-bottom: 1px solid #eaecef;
+  padding-bottom: 6.9px;
+  line-height: 1.2;
+  color: #000000;
+}
+
+.markdown-content h3 {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 13.8px;
+  margin-top: 20.7px;
+  line-height: 1.2;
+  color: #000000;
+}
+
+/* Text elements */
+.markdown-content p {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  margin-bottom: 20px;
+  margin-top: 12px;
+  line-height: 1.6;
+  color: #000000;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  margin-bottom: 20px;
+  margin-top: 12px;
+  padding-left: 2.3em;
+  line-height: 1.6;
+  color: #000000;
+}
+
+.markdown-content li {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  margin-bottom: 10px;
+  line-height: 1.6;
+  color: #000000;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+/* Images and figures */
+.markdown-content img {
+  max-width: 115%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.markdown-content figure {
+  width: 115%;
+  margin: 1.15rem 0;
+  padding: 11.5px;
+  border: 11.5px solid #A0A0A0;
+  background-color: #F2F2F2;
+}
+
+.markdown-content figcaption {
+  text-align: center;
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+}
+
+/* Blockquotes */
+.markdown-content blockquote {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  border-left: 4.6px solid #dfe2e5;
+  color: #6a737d;
+  margin-bottom: 13.8px;
+  margin-top: 0;
+  padding-left: 18.4px;
+  line-height: 1.4;
+}
+
+/* Code blocks */
+.markdown-content code {
+  font-family: "JetBrains Mono", Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace;
+  font-size: 14.95px;
+  padding: 0.23em 0.46em;
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 3.45px;
+}
+
+.markdown-content pre {
+  padding: 18.4px;
+  overflow: auto;
+  font-size: 14.95px;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 3.45px;
+  margin-bottom: 13.8px;
+  margin-top: 0;
+}
+
+.markdown-content pre code {
+  padding: 0;
+  font-size: inherit;
+  background-color: transparent;
+}
+
+/* KaTeX styles */
+.katex-display > .katex {
+  font-size: 0.9775em !important;
+}
+
+.katex {
+  font-size: 1.265em !important;
+}
+
+li .katex {
+  font-size: 1.265em !important;
+}
+
+.katex .math {
+  font-family: 'STIX Two Math', KaTeX_Math !important;
+  font-style: italic !important;
+  font-feature-settings: "ss01" 1;
+}
+
+.katex .mathit,
+.katex .mathnormal,
+.katex .mathdefault {
+  font-family: KaTeX_Math, 'STIX Two Math' !important;
+  font-style: italic !important;
+  font-feature-settings: "ss01" 1;
+}
+
+.katex .mord {
+  font-family: KaTeX_Main, 'STIX Two Math' !important;
+  font-feature-settings: "ss01" 1;
+}
+
+.katex .mord.mtight,
+.katex .mord.text,
+.katex .mord.text > .text,
+.katex .mord.text > span[class*="mathtt"],
+.katex .mord.text > span[class*="mathsf"],
+.katex .mord.text > span[class*="mathrm"],
+.katex .mord.text.mtight,
+.katex .mord.text > span[class*="mathord"] {
+  font-style: normal !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 9.2px;
+  height: 9.2px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F0F0F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #A0A0A0;
+  border-radius: 4.6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6C757D;
+}
+
+/* Bottom bar */
+.markdown-bottom-bar {
+  font-family: "Quicksand", sans-serif;
+  font-size: 13.524px;
+}
+
+/* Ensure mermaid diagrams stay rendered */
+.mermaid svg {
+  display: block !important;
+  max-width: 115%;
+  height: auto;
+}
+
+.mermaid:has(svg) {
+  background-color: transparent !important;
+}
+
+.mermaid:has(svg) .language-mermaid {
+  display: none !important;
+}
+
+/* Resizing styles */
+body.resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+body.resizing * {
+  cursor: col-resize !important;
+}
+
+/* Disable transitions during resize */
+.transition-none {
+  transition: none !important;
+}
+
+/* Add Mermaid diagram styles */
+.mermaid {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Ensure text in diagrams uses Quicksand font */
+.mermaid .label {
+  font-family: 'Quicksand', sans-serif !important;
+}
+
+/* Style diagram nodes */
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node ellipse,
+.mermaid .node polygon,
+.mermaid .node path {
+  fill: #f3f4f6;
+  stroke: #9ca3af;
+  stroke-width: 1px;
+}
+
+/* Style diagram edges */
+.mermaid .edgePath .path {
+  stroke: #6b7280;
+  stroke-width: 1.5px;
+}
+
+/* Style arrowheads */
+.mermaid .arrowheadPath {
+  fill: #6b7280;
+  stroke: none;
+}
+
+/* Style diagram text */
+.mermaid .nodeLabel {
+  color: #1f2937;
+  font-family: 'Quicksand', sans-serif !important;
+  font-size: 14px;
+}
+
+/* Style edge labels */
+.mermaid .edgeLabel {
+  background-color: white;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: 'Quicksand', sans-serif !important;
+  font-size: 12px;
+  color: #4b5563;
+}
+
+/* Related Topics styling */
+.related-topics-container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.related-topics-title {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.related-topics-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.related-topic-item {
+  padding: 0.5rem 1rem;
+  background-color: #eef2ff;
+  color: #4f46e5;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.related-topic-item:hover {
+  background-color: #e0e7ff;
+  cursor: pointer;
+}
+
+/* Concept Map styling */
+.concept-map-container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.concept-map-fullwidth {
+  max-width: 95%;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.concept-map-title {
+  font-family: "Quicksand", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.concept-map-svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.3s ease;
+}
+
+.diagram-container {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: #f9fafb;
+  max-height: 500px;
+  overflow: auto;
+}
+
+/* Zoom controls */
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.zoom-btn {
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  padding: 0.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #4b5563;
+  transition: all 0.2s ease;
+}
+
+.zoom-btn:hover {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.zoom-value {
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin: 0 0.5rem;
+  min-width: 3rem;
+  text-align: center;
+}
+
+/* Scrollbar styling for diagram container */
+.diagram-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.diagram-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.diagram-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.diagram-container::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Streaming cursor animation */
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.streaming-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: #4b5563;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+  vertical-align: middle;
+}
+
+/* Chat interface styling */
+.bg-white.rounded-lg .font-quicksand p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+  color: #1f2937;
+}
+
+.bg-white.rounded-lg .font-quicksand h1,
+.bg-white.rounded-lg .font-quicksand h2,
+.bg-white.rounded-lg .font-quicksand h3,
+.bg-white.rounded-lg .font-quicksand h4 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.bg-white.rounded-lg .font-quicksand h1 {
+  font-size: 1.25rem;
+}
+
+.bg-white.rounded-lg .font-quicksand h2 {
+  font-size: 1.15rem;
+}
+
+.bg-white.rounded-lg .font-quicksand h3,
+.bg-white.rounded-lg .font-quicksand h4 {
+  font-size: 1rem;
+}
+
+.bg-white.rounded-lg .font-quicksand ul,
+.bg-white.rounded-lg .font-quicksand ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+
+.bg-white.rounded-lg .font-quicksand li {
+  margin-bottom: 0.375rem;
+}
+
+.bg-white.rounded-lg .font-quicksand a {
+  color: #3182ce;
+  text-decoration: underline;
+}
+
+.bg-white.rounded-lg .font-quicksand code {
+  background-color: #f3f4f6;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  color: #111827;
+}
+
+.bg-white.rounded-lg .font-quicksand pre {
+  background-color: #f3f4f6;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+
+.bg-white.rounded-lg .font-quicksand pre code {
+  background-color: transparent;
+  padding: 0;
+  color: #111827;
+}
+
+.bg-white.rounded-lg .font-quicksand blockquote {
+  border-left: 3px solid #e5e7eb;
+  padding-left: 0.75rem;
+  font-style: italic;
+  color: #4b5563;
+  margin: 0.75rem 0;
+}
+
+/* Question styling */
+.bg-blue-50.rounded-lg p {
+  margin: 0;
+  color: #1e40af;
+  font-weight: 500;
+}
+
+/* Suggested questions */
+.bg-white.p-2.rounded {
+  transition: all 0.2s ease;
+}
+
+.bg-white.p-2.rounded:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Followup Question styling */
+.font-quicksand {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+}
+
+button.text-left > div.flex {
+  align-items: flex-start !important;
+}
+
+button.text-left .font-quicksand p {
+  margin: 0;
+  padding: 4px 0;
+  line-height: 1.5;
+  color: #000000;
+  font-weight: 500;
+}
+
+button.text-left .font-quicksand ul,
+button.text-left .font-quicksand ol {
+  margin: 8px 0;
+  color: #000000;
+}
+
+button.text-left .font-quicksand li {
+  margin-bottom: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  color: #000000;
+}
+
+.bg-gray-50 .font-quicksand p {
+  margin: 10px 0;
+  line-height: 1.6;
+  color: #000000;
+}
+
+/* Make sure links are visible in Q&A sections */
+button.text-left .font-quicksand a,
+.bg-gray-50 .font-quicksand a {
+  color: #3182ce;
+  text-decoration: underline;
+}
+
+/* Chat styling */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.chat-markdown p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.chat-markdown h1,
+.chat-markdown h2,
+.chat-markdown h3,
+.chat-markdown h4 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.chat-markdown h1 { font-size: 1.25rem; }
+.chat-markdown h2 { font-size: 1.15rem; }
+.chat-markdown h3, .chat-markdown h4 { font-size: 1rem; }
+
+.chat-markdown ul,
+.chat-markdown ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+
+.chat-markdown li {
+  margin-bottom: 0.375rem;
+}
+
+.chat-markdown a {
+  color: #4f46e5; /* indigo-600 */
+  text-decoration: underline;
+}
+
+.chat-markdown code {
+  background-color: #f3f4f6;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.85em;
+}
+
+.chat-markdown pre {
+  background-color: #f3f4f6;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+
+.chat-markdown pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+.chat-markdown blockquote {
+  border-left: 3px solid #e5e7eb;
+  padding-left: 0.75rem;
+  font-style: italic;
+  color: #4b5563;
+  margin: 0.75rem 0;
+}
+
+/* Improved streaming cursor */
+@keyframes blinkCursor {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.streaming-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: #4f46e5; /* indigo-600 */
+  margin-left: 2px;
+  animation: blinkCursor 0.8s infinite;
+  vertical-align: middle;
+}
+
+/* Animation for loading state */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Message bubble styling */
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
+.rounded-tl-none {
+  border-top-left-radius: 0;
+}
+
+/* Scrollbar styling for chat container */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 20px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
