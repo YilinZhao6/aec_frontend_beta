@@ -5,7 +5,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
-import { Loader2, ZoomIn, ZoomOut, Maximize, Minimize } from 'lucide-react';
+import { Loader2, ZoomIn, ZoomOut, Move } from 'lucide-react';
 import mermaid from 'mermaid';
 import { customComponents } from './utils/markdownUtils';
 import 'katex/dist/katex.min.css';
@@ -37,7 +37,12 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
   const diagramRef = useRef<HTMLDivElement>(null);
   const diagramRenderedRef = useRef(false);
   const [diagramZoom, setDiagramZoom] = useState(100);
-  const [isFullWidth, setIsFullWidth] = useState(false);
+  const diagramZoomRef = useRef(100);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const positionRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     if (!diagramData?.diagram || !diagramRef.current || diagramRenderedRef.current) return;
@@ -150,8 +155,9 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
           svg.classList.add('concept-map-svg');
           
           // Apply current zoom level
-          svg.style.transform = `scale(${diagramZoom / 100})`;
+          svg.style.transform = `scale(${diagramZoom / 100}) translate(${position.x}px, ${position.y}px)`;
           svg.style.transformOrigin = 'top left';
+          svg.style.cursor = 'grab';
         }
       } catch (error) {
         console.error('Error rendering Mermaid diagram:', error);
@@ -161,18 +167,154 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
 
     // Add a small delay to ensure DOM is ready
     setTimeout(renderDiagram, 100);
-  }, [diagramData, diagramZoom]);
+  }, [diagramData, diagramZoom, position]);
+
+  useEffect(() => {
+    positionRef.current = position;
+  }, [position]);
+
+  useEffect(() => {
+    diagramZoomRef.current = diagramZoom;
+  }, [diagramZoom]);
 
   const handleZoomIn = () => {
-    setDiagramZoom(prev => Math.min(prev + 10, 200));
+    const newZoom = Math.min(diagramZoomRef.current + 10, 200);
+    setDiagramZoom(newZoom);
+    diagramZoomRef.current = newZoom;
   };
 
   const handleZoomOut = () => {
-    setDiagramZoom(prev => Math.max(prev - 10, 50));
+    const newZoom = Math.max(diagramZoomRef.current - 10, 50);
+    setDiagramZoom(newZoom);
+    diagramZoomRef.current = newZoom;
   };
 
-  const toggleFullWidth = () => {
-    setIsFullWidth(prev => !prev);
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!diagramRef.current) return;
+    
+    const svg = diagramRef.current.querySelector('svg');
+    if (!svg) return;
+
+    setIsDragging(true);
+    setDragStart({ x: e.clientX, y: e.clientY });
+    setDragOffset({ x: positionRef.current.x, y: positionRef.current.y });
+    
+    svg.style.cursor = 'grabbing';
+    svg.classList.add('dragging');
+    document.body.style.userSelect = 'none';
+    document.body.classList.add('dragging-active');
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !diagramRef.current) return;
+    
+    const svg = diagramRef.current.querySelector('svg');
+    if (!svg) return;
+    
+    const dx = e.clientX - dragStart.x;
+    const dy = e.clientY - dragStart.y;
+    
+    const newX = dragOffset.x + dx;
+    const newY = dragOffset.y + dy;
+    
+    positionRef.current = { x: newX, y: newY };
+    svg.style.transform = `scale(${diagramZoom / 100}) translate(${newX}px, ${newY}px)`;
+  };
+
+  const handleMouseUp = () => {
+    if (!diagramRef.current || !isDragging) return;
+    
+    const svg = diagramRef.current.querySelector('svg');
+    if (!svg) return;
+    
+    setPosition(positionRef.current);
+    setIsDragging(false);
+    
+    svg.style.cursor = 'grab';
+    svg.classList.remove('dragging');
+    document.body.style.userSelect = '';
+    document.body.classList.remove('dragging-active');
+  };
+
+  const handleMouseLeave = () => {
+    if (isDragging) {
+      handleMouseUp();
+    }
+  };
+
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (!diagramRef.current) return;
+
+    e.preventDefault();
+    
+    const svg = diagramRef.current.querySelector('svg');
+    if (!svg) return;
+    
+    // 确定鼠标位置相对于SVG的坐标
+    const rect = diagramRef.current.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    
+    // 当前的缩放级别
+    const currentZoom = diagramZoomRef.current;
+    
+    // 计算新的缩放级别，滚轮向上滚动时放大，向下滚动时缩小
+    let newZoom = currentZoom;
+    if (e.deltaY < 0) {
+      // 放大
+      newZoom = Math.min(currentZoom + 5, 200);
+    } else {
+      // 缩小
+      newZoom = Math.max(currentZoom - 5, 50);
+    }
+    
+    // 如果缩放级别没有变化，则不进行任何操作
+    if (newZoom === currentZoom) return;
+    
+    // 计算鼠标位置在缩放前后的变化，以便在缩放时保持鼠标位置不变
+    const scaleChange = newZoom / currentZoom;
+    
+    // 计算新的位置，使鼠标位置保持不变
+    const currentPos = positionRef.current;
+    
+    // 鼠标在当前缩放下的"真实"位置
+    const mouseRealX = (mouseX / (currentZoom / 100)) - currentPos.x;
+    const mouseRealY = (mouseY / (currentZoom / 100)) - currentPos.y;
+    
+    // 计算新位置，使鼠标在新缩放下对应的屏幕位置相同
+    const newX = -(mouseRealX * (newZoom / 100) - mouseX);
+    const newY = -(mouseRealY * (newZoom / 100) - mouseY);
+    
+    // 更新位置和缩放
+    positionRef.current = { x: newX, y: newY };
+    diagramZoomRef.current = newZoom;
+    
+    // 直接更新DOM以获得即时反馈
+    svg.style.transform = `scale(${newZoom / 100}) translate(${newX}px, ${newY}px)`;
+    
+    // 更新状态（节流处理，避免过多渲染）
+    requestAnimationFrame(() => {
+      setPosition({ x: newX, y: newY });
+      setDiagramZoom(newZoom);
+    });
+  };
+
+  const resetPosition = () => {
+    const newPosition = { x: 0, y: 0 };
+    const newZoom = 100;
+    
+    setPosition(newPosition);
+    setDiagramZoom(newZoom);
+    
+    positionRef.current = newPosition;
+    diagramZoomRef.current = newZoom;
+    
+    if (diagramRef.current) {
+      const svg = diagramRef.current.querySelector('svg');
+      if (svg) {
+        svg.style.transform = `scale(${newZoom / 100}) translate(0px, 0px)`;
+      }
+    }
   };
 
   useEffect(() => {
@@ -180,10 +322,10 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
 
     const svgElement = diagramRef.current.querySelector('svg');
     if (svgElement) {
-      svgElement.style.transform = `scale(${diagramZoom / 100})`;
+      svgElement.style.transform = `scale(${diagramZoom / 100}) translate(${position.x}px, ${position.y}px)`;
       svgElement.style.transformOrigin = 'top left';
     }
-  }, [diagramZoom]);
+  }, [diagramZoom, position]);
 
   // Handle keyboard shortcuts for zooming
   useEffect(() => {
@@ -268,7 +410,7 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
           )}
 
           {diagramData.diagram && (
-            <div className={`concept-map-container ${isFullWidth ? 'concept-map-fullwidth' : ''}`}>
+            <div className="concept-map-container">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="concept-map-title">Concept Map</h3>
                 <div className="flex items-center space-x-2">
@@ -294,21 +436,29 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
                     <ZoomIn size={18} />
                   </button>
                   <button 
-                    onClick={toggleFullWidth}
-                    className="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-md text-gray-700 ml-2"
-                    title={isFullWidth ? "Normal view" : "Full width view"}
+                    onClick={resetPosition}
+                    className="p-1.5 bg-gray-100 hover:bg-gray-200 rounded-md text-gray-700"
+                    title="Reset position"
                   >
-                    {isFullWidth ? <Minimize size={18} /> : <Maximize size={18} />}
+                    <Move size={18} />
                   </button>
                 </div>
               </div>
               <div 
                 ref={diagramRef} 
-                className="diagram-container overflow-auto"
+                className="diagram-container"
                 style={{ 
-                  maxHeight: isFullWidth ? '80vh' : '500px',
-                  transition: 'max-height 0.3s ease'
+                  maxHeight: '500px',
+                  transition: 'max-height 0.3s ease',
+                  width: '100%',
+                  overflow: 'auto',
+                  cursor: isDragging ? 'grabbing' : 'grab'
                 }}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+                onWheel={handleWheel}
               />
             </div>
           )}

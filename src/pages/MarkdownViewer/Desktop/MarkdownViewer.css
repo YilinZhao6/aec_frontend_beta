@@ -1,4 +1,32 @@
 /* Base styles */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Make sure all parent containers take full height */
+.h-screen {
+  height: 100vh;
+}
+
+/* Ensure the content fills the container */
+.flex-1 {
+  flex: 1 1 auto;
+}
+
+/* Ensure proper scrolling for the content area */
+.overflow-auto {
+  overflow: auto;
+}
+
+/* Ensure the content panel takes full height */
+.bg-gray-100.rounded-lg.shadow-lg {
+  box-sizing: border-box;
+}
+
 .markdown-content {
   color: #000000;
   font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
@@ -341,13 +369,9 @@ body.resizing * {
   border: 1px solid #e5e7eb;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-}
-
-.concept-map-fullwidth {
-  max-width: 95%;
-  width: 95%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .concept-map-title {
@@ -367,12 +391,28 @@ body.resizing * {
 }
 
 .diagram-container {
+  position: relative;
   border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
   padding: 1rem;
   background-color: #f9fafb;
-  max-height: 500px;
   overflow: auto;
+  width: 100%;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.diagram-container svg {
+  transition: transform 0.05s ease-out;
+  will-change: transform;
+}
+
+.diagram-container:active {
+  cursor: grabbing !important;
+}
+
+.diagram-container svg.dragging {
+  transition: none;
 }
 
 /* Zoom controls */
@@ -705,4 +745,19 @@ button.text-left .font-quicksand a,
 
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
   background: #9ca3af;
+}
+
+/* Ensure SVG figures are correctly displayed */
+.mermaid svg {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* 为拖动状态添加样式 */
+.dragging-active {
+  cursor: grabbing !important;
+}
+
+.dragging-active * {
+  cursor: grabbing !important;
 }

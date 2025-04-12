@@ -62,20 +62,20 @@ const QuestionWithAnswer: React.FC<QuestionWithAnswerProps> = ({
     <div className="mb-4">
       <button
         onClick={handleClick}
-        className={`w-full text-left px-6 py-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200 text-black font-quicksand ${
+        className={`w-full text-left px-6 py-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-200 text-black font-quicksand flex items-center ${
           isAnswerVisible ? 'bg-gray-50' : ''
         }`}
       >
-        <div className="flex items-start justify-between">
+        <div className="flex items-center justify-between w-full">
           <ReactMarkdown
             remarkPlugins={[remarkMath]}
             rehypePlugins={[rehypeKatex]}
-            className="font-quicksand text-black font-medium py-1"
+            className="font-quicksand text-black font-medium py-1 flex-1 flex items-center"
           >
             {question}
           </ReactMarkdown>
-          {!answer && !isLoading && <HelpCircle className="w-5 h-5 text-gray-500 mt-1" />}
-          {isLoading && <Loader2 className="w-5 h-5 text-gray-500 animate-spin mt-1" />}
+          {!answer && !isLoading && <HelpCircle className="w-5 h-5 text-gray-500 flex-shrink-0 my-auto" />}
+          {isLoading && <Loader2 className="w-5 h-5 text-gray-500 animate-spin flex-shrink-0 my-auto" />}
         </div>
       </button>
       
