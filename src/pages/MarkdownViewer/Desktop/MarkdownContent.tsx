@@ -59,15 +59,53 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
     // 改用更严格的匹配方式，只匹配看起来像变量名的简单公式
     const simpleVarRegex = /\$([a-zA-Z][a-zA-Z0-9_]{0,2})\$/g;
 
+    // 应该排除的通用术语列表
+    const excludedTerms = [
+      'problem', 'solution', 'example', '第一部分', '第二部分', '第三部分',
+      '一', '二', '三', '四', '五', '引言', '结论', 'introduction', 'conclusion',
+      'summary', '摘要', '概述', '总结', 'exercise', '练习', 'question', '问题',
+      'answer', 'part', 'section'
+    ];
+
     const concepts: {tag: string; text: string; explanation: string}[] = [];
     const processedTags = new Set<string>();
     const maxConcepts = 30; // 限制概念数量
+
+    // 从文本中移除前缀（如"Example:"）
+    const removePrefixes = (text: string) => {
+      return text.replace(/^(example|例子|例题|练习|问题|solution|解答|解决方案|问题)\s*[:：]\s*/i, '').trim();
+    };
+
+    // 检查文本是否为应该排除的通用术语
+    const shouldExcludeTerm = (text: string) => {
+      // 转换为小写进行比较
+      const lowerText = text.toLowerCase();
+      
+      // 检查是否为排除名单中的术语
+      if (excludedTerms.some(term => lowerText === term || lowerText.startsWith(term + ':'))) {
+        return true;
+      }
+      
+      // 检查是否太短或太通用
+      if (text.length < 3) {
+        return true;
+      }
+      
+      // 返回false表示不排除
+      return false;
+    };
 
     // 匹配概念标记 (优先级最高)
     let match;
     while ((match = conceptRegex.exec(content)) !== null) {
       const tag = match[1];
-      const text = match[2];
+      let text = match[2].trim();
+      
+      // 移除前缀
+      text = removePrefixes(text);
+      
+      // 跳过应排除的术语
+      if (shouldExcludeTerm(text)) continue;
       
       if (!processedTags.has(tag) && concepts.length < maxConcepts) {
         concepts.push({
@@ -81,9 +119,13 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
 
     // 匹配加粗术语，作为可能的概念 (优先级第二)
     while ((match = boldTermsRegex.exec(content)) !== null) {
-      const text = match[1];
-      // 排除过长或过短的术语
-      if (text.length > 40 || text.length < 2) continue;
+      let text = match[1].trim();
+      
+      // 移除前缀
+      text = removePrefixes(text);
+      
+      // 排除过长或过短的术语，以及应排除的通用术语
+      if (text.length > 40 || shouldExcludeTerm(text)) continue;
       
       const tag = text.toLowerCase().replace(/\s+/g, '_');
       
@@ -118,15 +160,22 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
     }
 
     // 如果仍然没有找到足够的概念，使用相关主题作为备选
-    if (concepts.length === 0 && diagramData?.related_topics) {
+    if (concepts.length < 5 && diagramData?.related_topics) {
       diagramData.related_topics.forEach((topic, index) => {
+        // 剔除相关主题中的通用术语
+        let cleanTopic = removePrefixes(topic);
+        if (shouldExcludeTerm(cleanTopic)) return;
+        
         if (concepts.length < maxConcepts) {
           const tag = `topic_${index}`;
-          concepts.push({
-            tag,
-            text: topic,
-            explanation: `${topic}是与本内容相关的主题。`
-          });
+          // 确保主题不重复
+          if (!concepts.some(c => c.text.toLowerCase() === cleanTopic.toLowerCase())) {
+            concepts.push({
+              tag,
+              text: cleanTopic,
+              explanation: `${cleanTopic}是与本内容相关的主题。`
+            });
+          }
         }
       });
     }
@@ -349,15 +398,12 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
     const svg = diagramRef.current.querySelector('svg');
     if (!svg) return;
     
-    // 确定鼠标位置相对于SVG的坐标
     const rect = diagramRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
     
-    // 当前的缩放级别
     const currentZoom = diagramZoomRef.current;
     
-    // 计算新的缩放级别，滚轮向上滚动时放大，向下滚动时缩小
     let newZoom = currentZoom;
     if (e.deltaY < 0) {
       // 放大
@@ -492,7 +538,6 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
         />
       </div>
 
-      {/* 添加概念解释组件 */}
       <ConceptExplanations concepts={conceptTopics} editorRef={contentRef} />
 
       {diagramData && (
