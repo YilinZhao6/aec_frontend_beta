@@ -8,6 +8,7 @@ import rehypeRaw from 'rehype-raw';
 import { Loader2, ZoomIn, ZoomOut, Move } from 'lucide-react';
 import mermaid from 'mermaid';
 import { customComponents } from './utils/markdownUtils';
+import ConceptExplanations from './components/ConceptExplanations';
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/github.css';
 
@@ -43,6 +44,104 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const positionRef = useRef({ x: 0, y: 0 });
+  
+  // 添加概念相关的状态
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [conceptTopics, setConceptTopics] = useState<{tag: string; text: string; explanation: string}[]>([]);
+
+  // 添加从内容中提取概念主题的函数
+  const extractConceptsFromContent = (content: string) => {
+    // 正则表达式匹配Markdown内容中的概念标记，例如 <span data-concept-tag="concept_name">概念文本</span>
+    // 或者匹配特定格式，例如 **概念名称**
+    const conceptRegex = /<span\s+data-concept-tag="([^"]+)"[^>]*>([^<]+)<\/span>/g;
+    const boldTermsRegex = /\*\*([^*]+)\*\*/g;
+    // 不再使用简单的数学公式正则表达式
+    // 改用更严格的匹配方式，只匹配看起来像变量名的简单公式
+    const simpleVarRegex = /\$([a-zA-Z][a-zA-Z0-9_]{0,2})\$/g;
+
+    const concepts: {tag: string; text: string; explanation: string}[] = [];
+    const processedTags = new Set<string>();
+    const maxConcepts = 30; // 限制概念数量
+
+    // 匹配概念标记 (优先级最高)
+    let match;
+    while ((match = conceptRegex.exec(content)) !== null) {
+      const tag = match[1];
+      const text = match[2];
+      
+      if (!processedTags.has(tag) && concepts.length < maxConcepts) {
+        concepts.push({
+          tag,
+          text,
+          explanation: `${text}是本文中的一个重要概念。` // 简单的解释，实际应用中可从API获取
+        });
+        processedTags.add(tag);
+      }
+    }
+
+    // 匹配加粗术语，作为可能的概念 (优先级第二)
+    while ((match = boldTermsRegex.exec(content)) !== null) {
+      const text = match[1];
+      // 排除过长或过短的术语
+      if (text.length > 40 || text.length < 2) continue;
+      
+      const tag = text.toLowerCase().replace(/\s+/g, '_');
+      
+      if (!processedTags.has(tag) && concepts.length < maxConcepts) {
+        concepts.push({
+          tag,
+          text,
+          explanation: `${text}是本文中的一个重要术语。` // 简单的解释
+        });
+        processedTags.add(tag);
+      }
+    }
+
+    // 如果从HTML标记和加粗文本中已经找到了足够的概念，则不再从数学公式中提取
+    if (concepts.length >= 5) {
+      // 如果已有5个以上概念，不再处理数学公式
+    } else {
+      // 只提取看起来像变量名的简单公式
+      while ((match = simpleVarRegex.exec(content)) !== null && concepts.length < maxConcepts) {
+        const text = match[1];
+        const tag = `math_${text}`;
+        
+        if (!processedTags.has(tag)) {
+          concepts.push({
+            tag,
+            text: `$${text}$`,
+            explanation: `变量 ${text} 是本文中出现的数学符号。`
+          });
+          processedTags.add(tag);
+        }
+      }
+    }
+
+    // 如果仍然没有找到足够的概念，使用相关主题作为备选
+    if (concepts.length === 0 && diagramData?.related_topics) {
+      diagramData.related_topics.forEach((topic, index) => {
+        if (concepts.length < maxConcepts) {
+          const tag = `topic_${index}`;
+          concepts.push({
+            tag,
+            text: topic,
+            explanation: `${topic}是与本内容相关的主题。`
+          });
+        }
+      });
+    }
+
+    // 如果提取的概念过多，只保留前maxConcepts个
+    return concepts.slice(0, maxConcepts);
+  };
+
+  // 在内容加载或变化时提取概念
+  useEffect(() => {
+    if (content) {
+      const extractedConcepts = extractConceptsFromContent(content);
+      setConceptTopics(extractedConcepts);
+    }
+  }, [content, diagramData?.related_topics]);
 
   useEffect(() => {
     if (!diagramData?.diagram || !diagramRef.current || diagramRenderedRef.current) return;
@@ -379,17 +478,22 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
 
   return (
     <>
-      <ReactMarkdown
-        children={content}
-        remarkPlugins={[remarkGfm, remarkMath]}
-        rehypePlugins={[
-          rehypeHighlight,
-          [rehypeKatex, { strict: false, throwOnError: false, output: 'html' }],
-          rehypeRaw
-        ]}
-        className="markdown-content"
-        components={customComponents(qaComponents)}
-      />
+      <div ref={contentRef}>
+        <ReactMarkdown
+          children={content}
+          remarkPlugins={[remarkGfm, remarkMath]}
+          rehypePlugins={[
+            rehypeHighlight,
+            [rehypeKatex, { strict: false, throwOnError: false, output: 'html' }],
+            rehypeRaw
+          ]}
+          className="markdown-content"
+          components={customComponents(qaComponents)}
+        />
+      </div>
+
+      {/* 添加概念解释组件 */}
+      <ConceptExplanations concepts={conceptTopics} editorRef={contentRef} />
 
       {diagramData && (
         <>
@@ -405,6 +509,48 @@ const MarkdownContent: React.FC<MarkdownContentProps> = ({
                     {topic}
                   </span>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* 添加概念主题模块 */}
+          {conceptTopics.length > 0 && (
+            <div className="concept-topics-container">
+              <h3 className="concept-topics-title">Concept Topics</h3>
+              <div className="concept-topics-list">
+                {conceptTopics
+                  // 按类型对概念进行分组和排序
+                  .sort((a, b) => {
+                    // 首先根据概念类型排序
+                    const aIsMath = a.tag.startsWith('math_');
+                    const bIsMath = b.tag.startsWith('math_');
+                    if (aIsMath && !bIsMath) return 1;
+                    if (!aIsMath && bIsMath) return -1;
+                    
+                    // 然后按文本字母顺序
+                    return a.text.localeCompare(b.text);
+                  })
+                  .map((concept, index) => (
+                    <span
+                      key={index}
+                      className={`concept-topic-item ${concept.tag.startsWith('math_') ? 'math-item' : ''}`}
+                      title={concept.explanation}
+                      onClick={() => {
+                        // 查找并滚动到对应的概念标记
+                        const conceptMarks = document.querySelectorAll(`.concept-mark[data-concept-tag="${concept.tag}"]`);
+                        if (conceptMarks.length > 0) {
+                          conceptMarks[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                          // 高亮显示该概念
+                          conceptMarks.forEach(mark => {
+                            mark.classList.add('highlight-pulse');
+                            setTimeout(() => mark.classList.remove('highlight-pulse'), 2000);
+                          });
+                        }
+                      }}
+                    >
+                      {concept.text}
+                    </span>
+                  ))}
               </div>
             </div>
           )}
