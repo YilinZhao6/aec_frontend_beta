@@ -1,0 +1,223 @@
+.landing-page {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* Main Content Styles */
+.main-content {
+  flex-grow: 1;
+  padding: 0 2vw;
+  margin-left: 220px;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 1.5vw;
+  height: 8vh;
+}
+
+.logo-container {
+  opacity: 0.9;
+  padding: 0.5vh 1.5vw;
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  height: 3.5vh;
+  width: auto;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1vw;
+  align-items: center;
+}
+
+.translate-button,
+.login-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5vh;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  font-size: 1.8vh;
+}
+
+.translate-button:hover,
+.login-button:hover {
+  color: #1a1a1a;
+}
+
+.hero-section {
+  background-image: url('/main/landing_page/main_page_box.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 2vh;
+  padding: 4vh 4vw;
+  color: white;
+  margin: 0;
+  height: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-section h1 {
+  font-size: 4vh;
+  margin-bottom: 2vh;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-section p {
+  font-size: 2.5vh;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+/* Workspace Section */
+.workspace-section {
+  padding: 2vh 2vw;
+  background-color: white;
+  border-radius: 2vh;
+  margin-top: 2vh;
+}
+
+.workspace-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3vh;
+}
+
+.workspace-header h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.workspace-actions {
+  display: flex;
+  gap: 1vw;
+}
+
+.btn-new-folder,
+.btn-create-workspace {
+  padding: 1vh 1.5vw;
+  border-radius: 1vh;
+  border: 1px solid #e0e0e0;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 0.9rem;
+}
+
+.btn-create-workspace {
+  background-color: #4a5568;
+  color: white;
+}
+
+.btn-more {
+  padding: 1vh;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Workspace Cards */
+.workspace-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 3vh 2vw;
+  padding-bottom: 2vh;
+}
+
+.workspace-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 1.5vh;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: white;
+}
+
+.workspace-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-content {
+  padding: 2vh;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1vh;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #1a1a1a;
+}
+
+.card-more-button {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 0.5vh;
+  transition: color 0.2s;
+}
+
+.card-more-button:hover {
+  color: #1a1a1a;
+}
+
+.description {
+  color: #718096;
+  margin: 0;
+}
+
+.new-project-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  cursor: pointer;
+  background-color: #f8fafc;
+}
+
+.new-project-card:hover {
+  background-color: #f1f5f9;
+}
+
+.new-project-icon {
+  color: #64748b;
+  margin-bottom: 1vh;
+}
+
+.new-project-text {
+  color: #64748b;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
