@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  PenSquare, Brain, Search, Database, FileStack, 
+import {
+  PenSquare, Brain, Search, Database, FileStack,
   BookOpen, ChevronRight, ChevronLeft,
   MoreVertical, UserCircle, FileText
 } from 'lucide-react';
@@ -31,44 +31,44 @@ const DefaultPage = () => {
   const quickActions: QuickAction[] = [
     {
       id: '1',
-      icon: <PenSquare size={24} />,
+      icon: <PenSquare size={48} className='text-zinc-500' />,
       title: 'Create Note',
-      color: 'bg-blue-500',
+      color: 'transparent',
       path: '/workspace/notes'
     },
     {
       id: '2',
-      icon: <Brain size={24} />,
+      icon: <Brain size={48} className='text-zinc-500' />,
       title: 'Deep Research',
-      color: 'bg-purple-500',
+      color: 'transparent',
       path: '/workspace/research'
     },
     {
       id: '3',
-      icon: <Search size={24} />,
+      icon: <Search size={48} className='text-zinc-500' />,
       title: 'Problem Solver',
-      color: 'bg-green-500',
+      color: 'transparent',
       path: '/workspace/solver'
     },
     {
       id: '4',
-      icon: <Database size={24} />,
+      icon: <Database size={48} className='text-zinc-500' />,
       title: 'Drive',
-      color: 'bg-orange-500',
+      color: 'transparent',
       path: '/workspace/drive'
     },
     {
       id: '5',
-      icon: <FileStack size={24} />,
+      icon: <FileStack size={48} className='text-zinc-500' />,
       title: 'File Assistant',
-      color: 'bg-pink-500',
+      color: 'transparent',
       path: ''
     },
     {
       id: '6',
-      icon: <BookOpen size={24} />,
+      icon: <BookOpen size={48} className='text-zinc-500' />,
       title: 'Summary',
-      color: 'bg-indigo-500',
+      color: 'transparent',
       path: '/workspace/summary'
     }
   ];
@@ -118,7 +118,7 @@ const DefaultPage = () => {
     <div className="min-h-screen bg-[#fbfbfa]">
       <TopToolbar />
       <PageBar />
-      
+
       <div className="max-w-5xl mx-auto px-8 py-10">
         <h1 className="text-4xl font-medium text-gray-900 mb-8">Good morning, User</h1>
 
@@ -138,18 +138,18 @@ const DefaultPage = () => {
               </button>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-6 gap-4">
             {quickActions.map(action => (
-              <div 
+              <div
                 key={action.id}
                 onClick={() => handleQuickActionClick(action.path)}
-                className="aspect-square rounded-xl border border-gray-200 hover:border-gray-300 transition-all cursor-pointer bg-white group flex flex-col items-center justify-center"
+                className="aspect-square rounded-xl border border-gray-200 hover:border-gray-300 transition-all cursor-pointer bg-white group flex flex-col items-center justify-center hover:scale-105"
               >
                 <div className={`w-12 h-12 rounded-xl ${action.color} text-white flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
                   {action.icon}
                 </div>
-                <h3 className="text-sm font-medium text-gray-900">{action.title}</h3>
+                <h3 className="text-sm font-medium text-zinc-500 group-hover:scale-110 transition-transform">{action.title}</h3>
               </div>
             ))}
           </div>

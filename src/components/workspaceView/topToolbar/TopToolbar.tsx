@@ -1,4 +1,3 @@
-import React from 'react';
 import { UserCircle, Plus } from 'lucide-react';
 
 const TopToolbar = () => {

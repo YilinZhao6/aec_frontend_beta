@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Languages, LogIn, MoreVertical, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import LeftSidebar from '../../../components/main/leftsidebar/LeftSidebar';
 import CreateWorkspaceModal from '../../../components/main/modals/createWorkspaceModal';
 import './LandingPage.css';
-
+import DecryptedText from '../../../components/main/decryptedText/decryptedText';
+import Squares from '../../../components/main/background/Squares';
+import TiltedCard from '../../../components/main/tiltedCard/TiltedCard';
 function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -23,12 +25,19 @@ function LandingPage() {
       <LeftSidebar />
 
       <main className="main-content">
+        <Squares
+          speed={0.5}
+          squareSize={40}
+          direction='diagonal'
+          borderColor='#fff'
+          hoverFillColor='#222'
+        />
         <header className="header">
           <div className="header-actions">
             <div className="logo-container">
-              <img 
-                src="/main/landing_page/hyperknow_logo_with_text.svg" 
-                alt="Hyperknow" 
+              <img
+                src="/main/landing_page/hyperknow_logo_with_text.svg"
+                alt="Hyperknow"
                 className="header-logo"
               />
             </div>
@@ -42,8 +51,24 @@ function LandingPage() {
         </header>
 
         <div className="hero-section">
-          <h1>Good Evening! Yilin</h1>
-          <p>Select a workspace to start, or just learn out of your curiosity</p>
+          <DecryptedText
+            text="Good Evening! Yilin"
+            animateOn="view"
+            revealDirection="center"
+            speed={70}
+            parentClassName="text-4xl"
+            className="text-4xl"
+          />
+          {/* <h1>Good Evening! Yilin</h1> */}
+          <DecryptedText
+            text="Select a workspace to start, or just learn out of your curiosity"
+            animateOn="view"
+            revealDirection="center"
+            speed={70}
+            parentClassName="text-4xl"
+            className="text-4xl"
+          />
+          {/* <p>Select a workspace to start, or just learn out of your curiosity</p> */}
         </div>
 
         <section className="workspace-section">
@@ -53,7 +78,7 @@ function LandingPage() {
               <button className="btn-new-folder">
                 <span>New Folder</span>
               </button>
-              <button 
+              <button
                 className="btn-create-workspace"
                 onClick={() => setIsModalOpen(true)}
               >
@@ -63,16 +88,17 @@ function LandingPage() {
             </div>
           </div>
 
+
           <div className="workspace-cards">
             {[1, 2, 1, 2, 1].map((imgNum, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="workspace-card"
                 onClick={() => navigate('/workspace')}
                 style={{ cursor: 'pointer' }}
               >
-                <div 
-                  className="card-image" 
+                <div
+                  className="card-image"
                   style={{
                     backgroundImage: `url('/workspace/dafult_cover/project_img_${imgNum}.png')`
                   }}
@@ -80,7 +106,7 @@ function LandingPage() {
                 <div className="card-content">
                   <div className="card-header">
                     <h3>Project {index + 1}</h3>
-                    <button 
+                    <button
                       className="card-more-button"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -94,8 +120,8 @@ function LandingPage() {
                 </div>
               </div>
             ))}
-            
-            <div 
+
+            <div
               className="workspace-card new-project-card"
               onClick={() => setIsModalOpen(true)}
             >

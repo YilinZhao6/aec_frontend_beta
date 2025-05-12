@@ -59,8 +59,8 @@
 .nav-items {
   list-style: none;
   padding: 0;
-  margin: 0;
   flex-grow: 1;
+ 
 }
 
 .nav-item {
@@ -68,6 +68,7 @@
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
+   margin-bottom: 3px;
   cursor: pointer;
   color: #666;
   border-radius: 8px;
