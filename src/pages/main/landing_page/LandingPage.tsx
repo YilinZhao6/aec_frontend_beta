@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { Languages, LogIn, MoreVertical, Plus } from 'lucide-react';
+import { ChevronDownIcon, Languages, LogIn, MoreVertical, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import LeftSidebar from '../../../components/main/leftsidebar/LeftSidebar';
+
 import CreateWorkspaceModal from '../../../components/main/modals/createWorkspaceModal';
 import './LandingPage.css';
-import DecryptedText from '../../../components/main/decryptedText/decryptedText';
-import Squares from '../../../components/main/background/Squares';
-import TiltedCard from '../../../components/main/tiltedCard/TiltedCard';
+
+import Sidebar from '../../../components/main/sidebar/Sidebar';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
+import { Button } from '../../../components/ui/button';
+import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -22,54 +24,52 @@ function LandingPage() {
 
   return (
     <div className="landing-page">
-      <LeftSidebar />
 
+      <Sidebar />
       <main className="main-content">
-        <Squares
-          speed={0.5}
-          squareSize={40}
-          direction='diagonal'
-          borderColor='#fff'
-          hoverFillColor='#222'
-        />
+
         <header className="header">
           <div className="header-actions">
-            <div className="logo-container">
-              <img
-                src="/main/landing_page/hyperknow_logo_with_text.svg"
-                alt="Hyperknow"
-                className="header-logo"
-              />
+            <p className="font-['IBM_Plex_Sans',Helvetica] text-[22px]">
+              My Workspaces
+            </p>
+            <div>
+              <DropdownMenu >
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="rounded-[20px] border-[#bcbcbc] h-[45px] px-2"
+                  >
+                    <div className="flex items-center gap-3 bg-transparent">
+                      <Avatar className="w-[30px] h-[30px] ">
+                        <AvatarImage
+                          src="public/main/landing_page/avatars.png"
+                          alt="John Doe"
+                        />
+                        <AvatarFallback>JD</AvatarFallback>
+                      </Avatar>
+                      <span className="font-['IBM_Plex_Sans',Helvetica] text-base">
+                        John Doe
+                      </span>
+                      <ChevronDownIcon className="w-4 h-4" />
+                    </div>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className='z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 text-popover-foreground shadow-md",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out",
+        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+        "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+        "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2",
+        "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2'>
+                  <DropdownMenuItem className='relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0'>Profile</DropdownMenuItem>
+                  <DropdownMenuItem className='relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0'>Settings</DropdownMenuItem>
+                  <DropdownMenuItem className='relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0'>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
-            <button className="translate-button">
-              <Languages size={20} />
-            </button>
-            <button className="login-button">
-              <LogIn size={20} />
-            </button>
+
           </div>
         </header>
-
-        <div className="hero-section">
-          <DecryptedText
-            text="Good Evening! Yilin"
-            animateOn="view"
-            revealDirection="center"
-            speed={70}
-            parentClassName="text-4xl"
-            className="text-4xl"
-          />
-          {/* <h1>Good Evening! Yilin</h1> */}
-          <DecryptedText
-            text="Select a workspace to start, or just learn out of your curiosity"
-            animateOn="view"
-            revealDirection="center"
-            speed={70}
-            parentClassName="text-4xl"
-            className="text-4xl"
-          />
-          {/* <p>Select a workspace to start, or just learn out of your curiosity</p> */}
-        </div>
 
         <section className="workspace-section">
           <div className="workspace-header">
