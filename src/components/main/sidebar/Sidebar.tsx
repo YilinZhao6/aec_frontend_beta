@@ -1,4 +1,18 @@
-import { FolderIcon, HardDriveIcon, HomeIcon, PlusIcon, StarIcon } from 'lucide-react';
+import {
+  HomeIcon,
+  FolderIcon,
+  BookOpenIcon,
+  UsersIcon,
+  HardDriveIcon,
+  PlusIcon,
+  FileTextIcon,
+  SearchIcon,
+  BrainCircuitIcon,
+  SettingsIcon,
+  CreditCardIcon,
+  PhoneIcon,
+  Share2Icon
+} from 'lucide-react';
 import { Button } from '../../ui/button';
 
 
@@ -7,25 +21,25 @@ function Sidebar() {
   const mainNavItems = [
     { icon: <HomeIcon className="w-4 h-4" />, label: "Home" },
     { icon: <FolderIcon className="w-4 h-4" />, label: "My Workspace" },
-    { icon: <StarIcon className="w-4 h-4" />, label: "Tutorials" },
-    { icon: <StarIcon className="w-4 h-4" />, label: "Community" },
+    { icon: <BookOpenIcon className="w-4 h-4" />, label: "Tutorials" },
+    { icon: <UsersIcon className="w-4 h-4" />, label: "Community" },
     { icon: <HardDriveIcon className="w-4 h-4" />, label: "My Hyper Drive" },
   ];
 
   // Data for quick action buttons
   const quickActions = [
-    { label: "Start new note", icon: <PlusIcon className="w-4 h-4" /> },
-    { label: "Open File Assistant", icon: <PlusIcon className="w-4 h-4" /> },
-    { label: "Start Deep Research", icon: <PlusIcon className="w-4 h-4" /> },
+    { label: "Start new note", icon: <FileTextIcon className="w-4 h-4" /> },
+    { label: "Open File Assistant", icon: <SearchIcon className="w-4 h-4" /> },
+    { label: "Start Deep Research", icon: <BrainCircuitIcon className="w-4 h-4" /> },
   ];
 
 
   // Data for bottom navigation items
   const bottomNavItems = [
-    { icon: <StarIcon className="w-4 h-4" />, label: "Account Settings" },
-    { icon: <StarIcon className="w-4 h-4" />, label: "Subscriptions" },
-    { icon: <StarIcon className="w-4 h-4" />, label: "Contact Us" },
-    { icon: <StarIcon className="w-4 h-4" />, label: "Social Media" },
+    { icon: <SettingsIcon className="w-4 h-4" />, label: "Account Settings" },
+    { icon: <CreditCardIcon className="w-4 h-4" />, label: "Subscriptions" },
+    { icon: <PhoneIcon className="w-4 h-4" />, label: "Contact Us" },
+    { icon: <Share2Icon className="w-4 h-4" />, label: "Social Media" },
   ];
 
   return (
@@ -45,7 +59,10 @@ function Sidebar() {
       {/* Main navigation */}
       <nav className="flex flex-col space-y-1 px-[10px] ">
         {mainNavItems.map((item, index) => (
-          <div key={index} className="flex items-center gap-2 hover:bg-white transition-colors px-2 py-[0.3rem] rounded-md">
+          <div
+            key={index}
+            className="flex items-center gap-2 hover:bg-white transition-colors px-2 py-[0.3rem] rounded-md cursor-pointer"
+          >
             {item.icon}
             <span className="font-['IBM_Plex_Sans',Helvetica] text-[12px]">
               {item.label}
@@ -75,9 +92,12 @@ function Sidebar() {
 
       {/* Bottom navigation - pushed to bottom with flex-grow */}
       <div className="flex-grow"></div>
-      <nav className="flex flex-col gap-3 px-[10px]">
+      <nav className="flex flex-col gap-2 px-[10px]">
         {bottomNavItems.map((item, index) => (
-          <div key={index} className="flex items-center gap-2">
+          <div
+            key={index}
+            className="flex items-center gap-2 hover:bg-white transition-colors px-2 py-[0.3rem] rounded-md cursor-pointer"
+          >
             {item.icon}
             <span className="font-['IBM_Plex_Sans',Helvetica] text-xs">
               {item.label}

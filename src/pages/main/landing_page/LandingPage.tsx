@@ -9,6 +9,7 @@ import { Button } from '../../../components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 import { Card } from '../../../components/ui/card';
 import ProjectDirectory from '../../../components/main/projectDirectory/ProjectDirectory';
+import { ShiftingDropDown } from '../../../components/main/dropdown/DropDown';
 
 function LandingPage() {
   const allTabs = [
@@ -108,15 +109,10 @@ function LandingPage() {
                     </div>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className='z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 text-popover-foreground shadow-md",
-        "data-[state=open]:animate-in data-[state=closed]:animate-out",
-        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-        "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
-        "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2",
-        "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2'>
-                  <DropdownMenuItem className='relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0'>Profile</DropdownMenuItem>
-                  <DropdownMenuItem className='relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0'>Settings</DropdownMenuItem>
-                  <DropdownMenuItem className='relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&>svg]:size-4 [&>svg]:shrink-0'>Logout</DropdownMenuItem>
+                <DropdownMenuContent className='dropdown-content'>
+                  <DropdownMenuItem className='dropdown-item'>Profile</DropdownMenuItem>
+                  <DropdownMenuItem className='dropdown-item'>Settings</DropdownMenuItem>
+                  <DropdownMenuItem className='dropdown-item'>Logout</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -207,20 +203,19 @@ function LandingPage() {
                 <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               </div>
 
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button className="bg-[#4587f7] rounded-[10px] h-[29px]">
+              <ShiftingDropDown
+                trigger={
+                  <>
                     <PlusIcon className="w-[17px] h-[18px] mr-1" />
                     Create
-                    <ChevronDownIcon className="w-3 h-[13px] ml-1" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>New Project</DropdownMenuItem>
-                  <DropdownMenuItem>New FolderIcon</DropdownMenuItem>
-                  <DropdownMenuItem>New Document</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                  </>
+                }
+                items={[
+                  { title: "New Project", onClick: () => setIsModalOpen(true) },
+                  { title: "New Folder", onClick: () => console.log("New Folder") },
+                  { title: "New Document", onClick: () => console.log("New Document") }
+                ]}
+              />
             </div>
           </div>
 
@@ -231,7 +226,6 @@ function LandingPage() {
             searchQuery={searchQuery}
             activeTab={activeTabIndex !== null ? allTabs[activeTabIndex].id : "project-directory"}
           />
-
         </Card>
         {/* <section className="workspace-section">
           <div className="workspace-header">
