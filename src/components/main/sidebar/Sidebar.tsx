@@ -35,7 +35,7 @@ function Sidebar() {
         <img
           className="w-[34px] h-[29px]"
           alt="Hyperknow logo"
-          src="public/main/landing_page/hyperknow_logo 1.svg"
+          src="/main/landing_page/hyperknow_logo 1.svg"
         />
         <span className="font-['Quicksand',Helvetica] font-normal text-[20px] ">
           Hyperknow
