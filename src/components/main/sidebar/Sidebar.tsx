@@ -4,7 +4,6 @@ import {
   BookOpenIcon,
   UsersIcon,
   HardDriveIcon,
-  PlusIcon,
   FileTextIcon,
   SearchIcon,
   BrainCircuitIcon,
@@ -64,7 +63,7 @@ function Sidebar() {
             className="flex items-center gap-2 hover:bg-white transition-colors px-2 py-[0.3rem] rounded-md cursor-pointer"
           >
             {item.icon}
-            <span className="font-['IBM_Plex_Sans',Helvetica] text-[12px]">
+            <span className="font-['IBM_Plex_Sans',Helvetica] text-[14px]">
               {item.label}
             </span>
           </div>
@@ -83,7 +82,7 @@ function Sidebar() {
             className="p-0 px-2 w-[152px] justify-start h-[28px] text-[#898989] border-dashed border-[#898989] bg-white mt-2"
           >
             {action.icon}
-            <span className="ml-[2px] font-['IBM_Plex_Sans',Helvetica] font-medium text-[11px]">
+            <span className="ml-[2px] font-['IBM_Plex_Sans',Helvetica] font-medium text-[12px]">
               {action.label}
             </span>
           </Button>
@@ -99,7 +98,7 @@ function Sidebar() {
             className="flex items-center gap-2 hover:bg-white transition-colors px-2 py-[0.3rem] rounded-md cursor-pointer"
           >
             {item.icon}
-            <span className="font-['IBM_Plex_Sans',Helvetica] text-xs">
+            <span className="font-['IBM_Plex_Sans',Helvetica] text-[14px]">
               {item.label}
             </span>
           </div>

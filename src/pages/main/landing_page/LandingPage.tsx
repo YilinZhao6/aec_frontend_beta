@@ -10,6 +10,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 import { Card } from '../../../components/ui/card';
 import ProjectDirectory from '../../../components/main/projectDirectory/ProjectDirectory';
 import { ShiftingDropDown } from '../../../components/main/dropdown/DropDown';
+import ShinyText from '../../../components/main/shinyText/ShinyText';
 
 function LandingPage() {
   const allTabs = [
@@ -27,7 +28,6 @@ function LandingPage() {
     },
   ];
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = useNavigate();
   const tabsRef = useRef<(HTMLElement | null)[]>([]);
   const [activeTabIndex, setActiveTabIndex] = useState<number | null>(0);
   const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
@@ -84,9 +84,8 @@ function LandingPage() {
 
         <header className="header">
           <div className="header-actions">
-            <p className="font-['IBM_Plex_Sans',Helvetica] text-[22px]">
-              My Workspaces
-            </p>
+            <ShinyText text="My Workspaces" disabled={false} speed={3} className="font-['IBM_Plex_Sans',Helvetica] text-[22px]" />
+
             <div>
               <DropdownMenu >
                 <DropdownMenuTrigger asChild>

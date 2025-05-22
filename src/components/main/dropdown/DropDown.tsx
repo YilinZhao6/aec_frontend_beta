@@ -34,7 +34,7 @@ export const ShiftingDropDown = ({ trigger, items, className }: DropDownProps) =
       <button
         onMouseEnter={() => handleSetSelected(1)}
         onClick={() => handleSetSelected(1)}
-        className="flex items-center gap-1 rounded-[10px] px-3 py-1.5 text-sm transition-colors bg-[#4587f7] text-white"
+        className="flex items-center gap-1 rounded-[10px] px-4 py-1.5 text-sm transition-colors bg-[#4587f7] text-white"
       >
         {trigger}
         <ArrowDown
@@ -58,7 +58,7 @@ export const ShiftingDropDown = ({ trigger, items, className }: DropDownProps) =
               opacity: 0,
               y: 8,
             }}
-            className="absolute left-0 top-[calc(100%_+_8px)] w-auto rounded-lg border border-neutral-200 bg-white p-2 shadow-lg z-50"
+            className="absolute left-0 top-[calc(100%_+_8px)] w-[130px] rounded-lg border border-neutral-200 bg-white p-2 shadow-lg z-50"
           >
             <Bridge />
             <Nub selected={selected} />
@@ -94,7 +94,7 @@ export const ShiftingDropDown = ({ trigger, items, className }: DropDownProps) =
 };
 
 const Bridge = () => (
-  <div className="absolute -top-[24px] left-0 right-0 h-[24px]" />
+  <div className="absolute -top-[24px] left-0 right-0 h-[24px] " />
 );
 
 const Nub = ({ selected }: { selected: number | null }) => {
@@ -127,7 +127,7 @@ const Nub = ({ selected }: { selected: number | null }) => {
       }}
       animate={{ left }}
       transition={{ duration: 0.25, ease: "easeInOut" }}
-      className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-tl border border-neutral-200 bg-white"
+      className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-tl"
     />
   );
 };
