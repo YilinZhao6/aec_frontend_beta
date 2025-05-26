@@ -112,7 +112,7 @@ function ProjectDirectory({ selectedProject, selectedTime, searchQuery, activeTa
   });
 
   return (
-    <section className="w-full py-4 px-8">
+    <section className="w-full py-[4px] px-8">
       <div className="grid grid-cols-4 gap-7">
         {filteredProjects.map((project) => (
           <div key={project.id} className="w-full h-[230px]">
@@ -125,7 +125,7 @@ function ProjectDirectory({ selectedProject, selectedTime, searchQuery, activeTa
                 <div className="absolute bottom-0 left-0 w-full">
                   <div className="w-full h-[53px] bg-white">
                   </div>
-                  <div className="absolute bottom-[25px] left-[18px] font-normal text-black text-xs">
+                  <div className="absolute bottom-[25px] left-[18px] font-normal text-black text-sm">
                     {project.title}
                   </div>
                   <div className="absolute bottom-[6px] left-[18px] font-normal text-black text-xs">

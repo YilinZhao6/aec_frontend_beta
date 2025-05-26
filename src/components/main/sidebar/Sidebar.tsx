@@ -42,7 +42,7 @@ function Sidebar() {
   ];
 
   return (
-    <div className="w-[200px] flex flex-col pt-[23px] pl-[23px] pb-[30px] space-y-6 ">
+    <div className="w-[190px] flex flex-col pt-[23px] pl-[16px] pb-[30px] space-y-6 ">
       {/* Logo */}
       <div className="flex items-center gap-2">
         <img
@@ -91,7 +91,7 @@ function Sidebar() {
 
       {/* Bottom navigation - pushed to bottom with flex-grow */}
       <div className="flex-grow"></div>
-      <nav className="flex flex-col gap-2 px-[10px]">
+      <nav className="flex flex-col gap-2 px-[3px]">
         {bottomNavItems.map((item, index) => (
           <div
             key={index}

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDownIcon, PlusIcon, Search } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import CreateWorkspaceModal from '../../../components/main/modals/createWorkspaceModal';
 import './LandingPage.css';
 import Sidebar from '../../../components/main/sidebar/Sidebar';
@@ -10,7 +9,6 @@ import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 import { Card } from '../../../components/ui/card';
 import ProjectDirectory from '../../../components/main/projectDirectory/ProjectDirectory';
 import { ShiftingDropDown } from '../../../components/main/dropdown/DropDown';
-import ShinyText from '../../../components/main/shinyText/ShinyText';
 
 function LandingPage() {
   const allTabs = [
@@ -84,9 +82,9 @@ function LandingPage() {
 
         <header className="header">
           <div className="header-actions">
-            <ShinyText text="My Workspaces" disabled={false} speed={3} className="font-['IBM_Plex_Sans',Helvetica] text-[22px]" />
-
+            <p className="font-['IBM_Plex_Sans',Helvetica] text-[22px]"> My Workspaces</p>
             <div>
+
               <DropdownMenu >
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -135,7 +133,7 @@ function LandingPage() {
                   <button
                     key={index}
                     ref={(el) => (tabsRef.current[index] = el)}
-                    className={` my-auto cursor-pointer select-none rounded-full px-4 text-center font-['IBM_Plex_Sans',Helvetica] text-black`}
+                    className={`my-auto cursor-pointer select-none rounded-full px-4 text-center font-['IBM_Plex_Sans',Helvetica] text-black text-sm`}
                     onClick={() => setActiveTabIndex(index)}
                   >
                     {tab.name}
