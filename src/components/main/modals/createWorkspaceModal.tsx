@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
-import { X, Image as ImageIcon } from 'lucide-react';
+import { UploadCloudIcon, X } from "lucide-react";
+import { Card } from "../../ui/card";
+import { Input } from "../../ui/input";
+import { Badge } from "../../ui/badge";
 import './createWorkspaceModal.css';
+import { Button } from "../../ui/button";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../../ui/select";
 
 interface CreateWorkspaceModalProps {
   isOpen: boolean;
@@ -16,175 +20,136 @@ interface WorkspaceData {
   background: string;
 }
 
-const LEARNING_PREFERENCES = [
-  { id: 'visual', label: 'Visual Learning' },
-  { id: 'stepByStep', label: 'Step-by-Step Explanation' },
-  { id: 'mathematical', label: 'Mathematical Formulas' },
-  { id: 'practical', label: 'Practical Examples' },
-  { id: 'historical', label: 'Historical Context' },
-  { id: 'diagrams', label: 'Diagrams & Charts' },
-  { id: 'interactive', label: 'Interactive Elements' },
-  { id: 'conceptual', label: 'Conceptual Understanding' },
-  { id: 'technical', label: 'Technical Details' },
-  { id: 'overview', label: 'Overview First' },
-  { id: 'detailed', label: 'Detailed Explanations' },
-  { id: 'practical', label: 'Practical Applications' },
-  { id: 'analogies', label: 'Analogies & Metaphors' },
-  { id: 'problemSolving', label: 'Problem Solving' },
-  { id: 'proofs', label: 'Proofs & Derivations' },
-  { id: 'simplified', label: 'Simplified Language' }
-];
+const CreateWorkspaceModal = ({ isOpen, onClose, onSubmit }: CreateWorkspaceModalProps) => {
+  // Sample tag data for mapping
+  const tags = [
+    { id: 1, name: "Math", color: "bg-[#60adff]" },
+    { id: 2, name: "Physics", color: "bg-[#72b17b]" },
+    { id: 3, name: "Chemistry", color: "bg-[#ffcc58]" },
+  ];
 
-const DEFAULT_COVERS = [
-  '/workspace/dafult_cover/project_img_1.png',
-  '/workspace/dafult_cover/project_img_2.png'
-];
-
-function CreateWorkspaceModal({ isOpen, onClose, onSubmit }: CreateWorkspaceModalProps) {
-  const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState<WorkspaceData>({
-    name: '',
-    description: '',
-    coverImage: DEFAULT_COVERS[0],
-    learningPreferences: [],
-    background: ''
-  });
-
+  // Sample cover images data for mapping
+  const coverImages = [
+    { id: 1, src: "/main/landing_page/projectRectangle/rectangle-1.png", alt: "Rectangle" },
+    { id: 2, src: "/main/landing_page/projectRectangle/rectangle-2.png", alt: "Rectangle" },
+    { id: 3, src: "/main/landing_page/projectRectangle/rectangle-3.png", alt: "Rectangle" },
+    { id: 4, src: "/main/landing_page/projectRectangle/rectangle-4.png", alt: "Rectangle" },
+    { id: 5, src: "/main/landing_page/projectRectangle/rectangle-5.png", alt: "Rectangle" },
+  ];
   if (!isOpen) return null;
-
-  const handleNext = () => {
-    if (step < 2) setStep(step + 1);
-    else onSubmit(formData);
-  };
-
-  const handleBack = () => {
-    if (step > 1) setStep(step - 1);
-  };
-
-  const togglePreference = (id: string) => {
-    setFormData(prev => ({
-      ...prev,
-      learningPreferences: prev.learningPreferences.includes(id)
-        ? prev.learningPreferences.filter(p => p !== id)
-        : [...prev.learningPreferences, id]
-    }));
-  };
-
   return (
     <div className="modal-overlay">
-      <div className="modal-container">
-        {/* Header Bar */}
-        <div className="modal-header">
-          <h2>New Workspace</h2>
-          <button onClick={onClose} className="close-button">
-            <X size={18} />
-          </button>
+      <div className="w-full max-w-[800px] h-[500px] pt-4 pb-6 px-6 mx-auto overflow-hidden overflow-y-scroll font-['IBM_Plex_Sans',Helvetica] bg-white rounded-[10px]">
+        <button className="w-full flex flex-col " onClick={onClose}><X className="self-end" /></button>
+        <div className="flex flex-col items-center mb-6 ">
+          <h2 className="text-2xl font-normal text-black">
+            Create New Workspace
+          </h2>
+          <p className="text-lg text-[#898989] text-center max-w-[485px] mt-2">
+            Workspaces are where you have your study materials organized by
+            subject, topic, or your interest
+          </p>
         </div>
 
-        {/* Main Content */}
-        <div className="modal-content">
-          {/* Left Panel - Steps */}
-          <div className="steps-panel">
-            <div 
-              className={`step-item ${step === 1 ? 'active' : ''}`}
-              onClick={() => setStep(1)}
-            >
-              Basic Info
-            </div>
-            <div 
-              className={`step-item ${step === 2 ? 'active' : ''}`}
-              onClick={() => setStep(2)}
-            >
-              Learning Preferences
-            </div>
+        <div className="grid grid-cols-2 gap-6 px-4">
+          {/* Workspace Name Field */}
+          <div className="space-y-2">
+            <label className="text-lg font-normal">
+              Workspace Name <span className="text-[#e72a2a]">*</span>
+            </label>
+            <Input
+              className="h-[50px] rounded-[20px] border-2 border-[#e2e2e2] px-4  placeholder:text-[20px] "
+              placeholder="Name your workspace"
+            />
           </div>
 
-          {/* Right Panel - Content */}
-          <div className="form-content">
-            {step === 1 && (
-              <div className="form-section">
-                <div className="form-group">
-                  <label>Workspace Name</label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={e => setFormData({...formData, name: e.target.value})}
-                    placeholder="Enter workspace name"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Description (Optional)</label>
-                  <textarea
-                    value={formData.description}
-                    onChange={e => setFormData({...formData, description: e.target.value})}
-                    rows={3}
-                    placeholder="Describe your workspace"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Cover Image</label>
-                  <div className="cover-grid">
-                    {DEFAULT_COVERS.map((cover, index) => (
-                      <div
-                        key={index}
-                        onClick={() => setFormData({...formData, coverImage: cover})}
-                        className={`cover-item ${formData.coverImage === cover ? 'selected' : ''}`}
-                      >
-                        <img src={cover} alt={`Cover ${index + 1}`} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
+          {/* Select Profile Field */}
+          <div className="space-y-2">
+            <label className="text-lg font-normal">
+              Select Profile <span className="text-[#e72a2a]">*</span>
+            </label>
+            <div className="">
+              <Select >
+                <SelectTrigger className="h-[50px] rounded-[20px] border-2 border-[#e2e2e2] flex items-center px-4 text-[20px]">
+                  <SelectValue placeholder=" Create New Profile" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="apple">Apple</SelectItem>
+                    <SelectItem value="banana">Banana</SelectItem>
+                    <SelectItem value="blueberry">Blueberry</SelectItem>
+                    <SelectItem value="grapes">Grapes</SelectItem>
+                    <SelectItem value="pineapple">Pineapple</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
 
-            {step === 2 && (
-              <div className="form-section">
-                <h3>Preferred Learning Style</h3>
-                <div className="preferences-grid">
-                  {LEARNING_PREFERENCES.map(pref => (
-                    <button
-                      key={pref.id}
-                      onClick={() => togglePreference(pref.id)}
-                      className={`preference-item ${formData.learningPreferences.includes(pref.id) ? 'selected' : ''}`}
-                    >
-                      {pref.label}
-                    </button>
-                  ))}
-                </div>
+              </Select>
+            </div>
 
-                <div className="form-group additional-preferences">
-                  <h3>Additional Background</h3>
-                  <textarea
-                    value={formData.background}
-                    onChange={e => setFormData({...formData, background: e.target.value})}
-                    rows={4}
-                    placeholder="Tell us about your background (e.g., high school student, taking AP courses)"
-                  />
-                </div>
-              </div>
-            )}
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="modal-footer">
-          <button
-            onClick={handleBack}
-            className={`back-button ${step === 1 ? 'invisible' : ''}`}
-          >
-            Back
-          </button>
-          <button
-            onClick={handleNext}
-            className="next-button"
-          >
-            {step === 2 ? 'Create Workspace' : 'Next'}
-          </button>
+        {/* Tags Section */}
+        <div className="mt-6 px-4">
+          <label className="text-lg font-normal block mb-2">
+            Tags (Optional)
+          </label>
+          <Input
+            className="h-[50px] rounded-[20px] border-2 border-[#e2e2e2] px-4 text-xl text-[#898989]"
+            placeholder='Type + "Ctrl" to add tags'
+          />
+
+          <div className="flex gap-2 mt-4">
+            {tags.map((tag) => (
+              <Badge
+                key={tag.id}
+                className={`${tag.color} text-white text-xl py-1 px-3 h-10 rounded-[20px]`}
+              >
+                {tag.name}
+              </Badge>
+            ))}
+          </div>
         </div>
+
+        {/* Collaborator Section */}
+        <div className="mt-6 px-4">
+          <label className="text-lg font-normal block mb-2">
+            Collaborator (Optional)
+          </label>
+          <Input
+            className="h-[50px] rounded-[20px] border-2 border-[#e2e2e2] px-4 text-xl text-[#898989]"
+            placeholder="Invite collaborator"
+          />
+        </div>
+
+        {/* Workspace Cover Section */}
+        <div className="mt-6 px-4">
+          <label className="text-lg font-normal block mb-2">
+            Select Workspace Cover
+          </label>
+
+          <div className="grid grid-cols-3 gap-4">
+            <Card className="w-[194px] h-[130px] bg-[#f4f4f4] rounded-[5px] border-2 border-[#d9d9d9] flex flex-col items-center justify-center">
+              <UploadCloudIcon className="w-12 h-12 mb-2" />
+              <p className="text-base text-[#898989]">Upload from computer</p>
+            </Card>
+
+            {coverImages.map((image) => (
+              <div key={image.id} className="w-[194px] h-[130px]">
+                <img
+                  className="w-full h-full object-cover rounded-[5px]"
+                  alt={image.alt}
+                  src={image.src}
+                />
+              </div>
+            ))}
+          </div>
+
+        </div>
+        <div className="flex flex-col mt-4"><Button className="bg-[#EDECEC] rounded-[17px] font-['IBM_Plex_Sans',Helvetica] text-[1.2rem] font-normal text-black w-[108px] h-[45px] self-end hover:bg-slate-600 hover:text-white">Create</Button></div>
+
       </div>
     </div>
   );
-}
-
+};
 export default CreateWorkspaceModal;

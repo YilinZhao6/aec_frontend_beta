@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDownIcon, PlusIcon, Search } from 'lucide-react';
-import CreateWorkspaceModal from '../../../components/main/modals/createWorkspaceModal';
+import { ChevronDownIcon, Languages, PlusIcon, Search } from 'lucide-react';
+
 import './LandingPage.css';
 import Sidebar from '../../../components/main/sidebar/Sidebar';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
@@ -9,6 +9,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 import { Card } from '../../../components/ui/card';
 import ProjectDirectory from '../../../components/main/projectDirectory/ProjectDirectory';
 import { ShiftingDropDown } from '../../../components/main/dropdown/DropDown';
+import CreateWorkspaceModal from '../../../components/main/modals/createWorkspaceModal';
 
 function LandingPage() {
   const allTabs = [
@@ -83,7 +84,10 @@ function LandingPage() {
         <header className="header">
           <div className="header-actions">
             <p className="font-['IBM_Plex_Sans',Helvetica] text-[22px]"> My Workspaces</p>
-            <div>
+            <div className='flex justify-between gap-3'>
+              <button className="p-2 hover:scale-105 transition-transform">
+                <Languages className="w-6 h-6" />
+              </button>
 
               <DropdownMenu >
                 <DropdownMenuTrigger asChild>
