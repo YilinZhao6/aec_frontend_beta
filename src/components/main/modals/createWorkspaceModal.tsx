@@ -87,7 +87,7 @@ const CreateWorkspaceModal = ({ isOpen, onClose, onSubmit }: CreateWorkspaceModa
   if (!isOpen) return null;
   return (
     <div className="modal-overlay">
-      <div className="w-full max-w-[800px] h-[500px] pt-4 pb-6 px-6 mx-auto overflow-hidden overflow-y-scroll font-['IBM_Plex_Sans',Helvetica] bg-white rounded-[10px]">
+      <div className="w-full max-w-[800px] h-[500px] pt-4 pb-6 px-6 mx-auto overflow-hidden overflow-y-scroll font-['IBM_Plex_Sans',Helvetica] bg-white rounded-[10px] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
         <button className="w-full flex flex-col " onClick={onClose}><X className="self-end" /></button>
         <div className="flex flex-col items-center mb-6 ">
           <h2 className="text-2xl font-normal text-black">
@@ -153,8 +153,9 @@ const CreateWorkspaceModal = ({ isOpen, onClose, onSubmit }: CreateWorkspaceModa
           <div className="flex flex-wrap gap-2 mt-4">
             {formData.tags.map((tag, index) => (
               <Badge
+                variant="outline"
                 key={index}
-                className={`${tagColors[index % tagColors.length]} text-white text-xl py-1 px-3 h-10 rounded-[20px] cursor-pointer hover:opacity-80`}
+                className={`${tagColors[index % tagColors.length]} text-white text-xl py-1 px-3 h-10 rounded-[20px] cursor-pointer   transition-transform hover:scale-105 `}
                 onClick={() => removeTag(tag)}
               >
                 {tag}
@@ -206,7 +207,7 @@ const CreateWorkspaceModal = ({ isOpen, onClose, onSubmit }: CreateWorkspaceModa
 
         <div className="flex flex-col mt-4">
           <Button
-            className="bg-[#EDECEC] rounded-[17px] font-['IBM_Plex_Sans',Helvetica] text-[1.2rem] font-normal text-black w-[108px] h-[45px] self-end hover:bg-slate-600 hover:text-white"
+            className="bg-[#EDECEC] rounded-[17px] font-['IBM_Plex_Sans',Helvetica] text-[1.2rem] font-normal text-black w-[108px] h-[45px] self-end hover:bg-[#447af0] hover:text-white"
             onClick={handleSubmit}
           >
             Create
