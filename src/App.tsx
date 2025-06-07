@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/main/landing_page/LandingPage';
+import WorkspacePage from './pages/workspacePage/workspacePage'
 import DefaultPage from './pages/workspaceView/DefaultPage/DefaultPage';
 import NoteEditorPage from './pages/workspaceView/utilPage/noteEditor/NoteEditorPage';
 import NoteExplorer from './pages/workspaceView/explorerPages/NoteExplorer/NoteExplorer';
@@ -14,7 +15,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/workspace" element={<DefaultPage />} />
+        <Route path="/workspace" element={<WorkspacePage />} />
         <Route path="/workspace/files" element={<DefaultPage />} />
         <Route path="/workspace/other" element={<DefaultPage />} />
         <Route path="/workspace/note" element={<NoteEditorPage />} />
