@@ -68,7 +68,7 @@ export const MainContent: React.FC<MainContentProps> = ({ tabId }) => {
   ];
 
   return (
-    <div className="flex flex-col items-center w-full h-[732px] px-8">
+    <div className="flex flex-col items-center w-full  px-8">
       <div className="max-w-[800px] pt-[70px]">
         {/* Header with title and icon */}
         <div className="flex items-center mb-8 w-full -ml-[20px]">

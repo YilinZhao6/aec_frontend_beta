@@ -4,6 +4,7 @@ import {
   MoreHorizontalIcon,
   Plus,
   SearchIcon,
+  Share2Icon,
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../components/ui/button";
@@ -15,9 +16,11 @@ interface TabData {
   id: string;
   title: string;
 }
+
 function WorkspacePage() {
   const [tabs, setTabs] = useState<TabData[]>([{ id: "1", title: "New tab" }]);
   const [activeTabId, setActiveTabId] = useState("1");
+  const [draggedTabId, setDraggedTabId] = useState<string | null>(null);
 
   const addTab = () => {
     const newTab = {
@@ -41,59 +44,83 @@ function WorkspacePage() {
     setActiveTabId(tabId);
   };
 
+  const handleDragStart = (e: React.DragEvent, tabId: string) => {
+    setDraggedTabId(tabId);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+  };
+
+  const handleDrop = (e: React.DragEvent, targetTabId: string) => {
+    e.preventDefault();
+    if (!draggedTabId || draggedTabId === targetTabId) return;
+
+    const draggedTabIndex = tabs.findIndex(tab => tab.id === draggedTabId);
+    const targetTabIndex = tabs.findIndex(tab => tab.id === targetTabId);
+
+    const newTabs = [...tabs];
+    const [draggedTab] = newTabs.splice(draggedTabIndex, 1);
+    newTabs.splice(targetTabIndex, 0, draggedTab);
+
+    setTabs(newTabs);
+    setDraggedTabId(null);
+  };
+
   return (
     <div className="bg-white flex flex-row justify-center w-full">
       <div className="bg-white overflow-hidden w-full h-[1080px] relative">
-        {/* Top navigation bar */}
-        <div className="absolute top-[11px] left-[894px] flex items-center">
-          <h1 className="font-normal text-xl text-black font-['Outfit',Helvetica]">
-            WORKSPACE NAME
-          </h1>
-          <div className="ml-[15px] bg-[#ecf1f6] rounded-[5px] px-2 py-1">
-            <span className="font-medium text-[11px] text-[#6b6b6b] font-['Inter',Helvetica]">
-              Workspace
-            </span>
+        <div className="flex flex-row justify-between items-center align-middle mt-[11px]">
+          {/* Back button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className=" ml-8"
+          >
+            <ArrowLeftIcon className="w-6 h-6" />
+          </Button>
+          <div className="justify-center flex items-center">
+            <h1 className="font-normal text-xl text-black font-['Outfit',Helvetica]">
+              WORKSPACE NAME
+            </h1>
+            <div className="ml-[15px] bg-[#ecf1f6] rounded-[5px] px-2 py-1">
+              <span className="font-medium text-[11px] text-[#6b6b6b] font-['Inter',Helvetica]">
+                Workspace
+              </span>
+            </div>
+          </div>
+          <div className="flex flex-row justify-center items-center align-middle mr-8">
+            {/* Share button */}
+            <Button variant="ghost" size="icon" className="p-0 h-auto mr-4"><Share2Icon className="w-8 h-8" /></Button>
+            {/* Search bar */}
+            <div className=" w-[300px] h-8  bg-[#ecf1f6] rounded-md flex items-center px-2.5">
+              <SearchIcon className="w-6 h-6" />
+              <span className="ml-[11px] font-normal text-xs text-[#6f6f6f] font-['Inter',Helvetica]">
+                Spotlight Search
+              </span>
+            </div>
           </div>
         </div>
-
-        {/* Share button */}
-        <img
-          className="absolute w-[21px] h-[21px] top-[18px] left-[1511px]"
-          alt="Share"
-          src="/share-2.svg"
-        />
-
-        {/* Search bar */}
-        <div className="absolute w-[341px] h-8 top-[11px] left-[1545px] bg-[#ecf1f6] rounded-md flex items-center px-2.5">
-          <SearchIcon className="w-6 h-6" />
-          <span className="ml-[11px] font-normal text-xs text-[#6f6f6f] font-['Inter',Helvetica]">
-            Spotlight Search
-          </span>
-        </div>
-
-        {/* Back button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute top-[15px] left-3.5 p-0"
-        >
-          <ArrowLeftIcon className="w-6 h-6" />
-        </Button>
-
         {/* Main content area */}
-        <div className="absolute w-full h-[1026px] top-[53px] left-1.5">
+        <div className="absolute w-full  top-[53px] left-1.5">
           <div className="absolute w-full h-[1026px] top-0 left-0">
             {/* Main container */}
-            <div className="absolute w-[calc(100%-72px)] h-[1026px] top-0 left-9 bg-white rounded-[6px_0px_0px_0px] border border-solid border-[#e2e2e2]">
+            <div className="absolute w-full h-[1026px] top-0 left-9 bg-white rounded-[8px_0px_0px_0px] border border-solid border-[#e2e2e2]">
               {/* Tab bar */}
-              <div className="flex h-8 border-b border-[#e2e2e2]">
+              <div className="flex h-8 border-b border-[#e2e2e2] rounded-[8px_0px_0px_0px]">
                 {tabs.map((tab) => (
                   <Tab
                     key={tab.id}
                     title={tab.title}
+                    tabId={tab.id}
                     isActive={tab.id === activeTabId}
                     onClose={() => closeTab(tab.id)}
                     onClick={() => selectTab(tab.id)}
+                    onDragStart={handleDragStart}
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
                   />
                 ))}
                 <Button
