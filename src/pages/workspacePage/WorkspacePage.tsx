@@ -1,10 +1,12 @@
 import React from 'react'
 import {
   ArrowLeftIcon,
+  ColumnsIcon,
   MoreHorizontalIcon,
   Plus,
   SearchIcon,
   Share2Icon,
+  X,
 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../components/ui/button";
@@ -17,35 +19,76 @@ interface TabData {
   title: string;
 }
 
+interface PanelData {
+  id: string;
+  tabs: TabData[];
+  activeTabId: string;
+}
+
 function WorkspacePage() {
-  const [tabs, setTabs] = useState<TabData[]>([{ id: "1", title: "New tab" }]);
-  const [activeTabId, setActiveTabId] = useState("1");
-  const [draggedTabId, setDraggedTabId] = useState<string | null>(null);
-
-  const addTab = () => {
-    const newTab = {
-      id: Date.now().toString(),
-      title: "New tab",
-    };
-    setTabs([...tabs, newTab]);
-    setActiveTabId(newTab.id);
-  };
-
-  const closeTab = (tabId: string) => {
-    if (tabs.length === 1) return;
-    const newTabs = tabs.filter((tab) => tab.id !== tabId);
-    setTabs(newTabs);
-    if (tabId === activeTabId) {
-      setActiveTabId(newTabs[newTabs.length - 1].id);
+  const [panels, setPanels] = useState<PanelData[]>([
+    {
+      id: "1",
+      tabs: [{ id: "1", title: "New tab" }],
+      activeTabId: "1"
     }
+  ]);
+
+  const addTab = (panelId: string) => {
+    setPanels(panels.map(panel => {
+      if (panel.id === panelId) {
+        const newTab = {
+          id: Date.now().toString(),
+          title: "New tab",
+        };
+        return {
+          ...panel,
+          tabs: [...panel.tabs, newTab],
+          activeTabId: newTab.id
+        };
+      }
+      return panel;
+    }));
   };
 
-  const selectTab = (tabId: string) => {
-    setActiveTabId(tabId);
+  const closeTab = (panelId: string, tabId: string) => {
+    setPanels(panels.map(panel => {
+      if (panel.id === panelId) {
+        if (panel.tabs.length === 1) {
+          // If this is the last tab in the panel and there are multiple panels,
+          // close the entire panel
+          if (panels.length > 1) {
+            return null; // This will be filtered out
+          }
+          // If this is the only panel, keep the tab
+          return panel;
+        }
+        const newTabs = panel.tabs.filter((tab) => tab.id !== tabId);
+        return {
+          ...panel,
+          tabs: newTabs,
+          activeTabId: tabId === panel.activeTabId ? newTabs[newTabs.length - 1].id : panel.activeTabId
+        };
+      }
+      return panel;
+    }).filter(Boolean) as PanelData[]); // Filter out null panels
   };
 
-  const handleDragStart = (e: React.DragEvent, tabId: string) => {
-    setDraggedTabId(tabId);
+  const selectTab = (panelId: string, tabId: string) => {
+    setPanels(panels.map(panel => {
+      if (panel.id === panelId) {
+        return {
+          ...panel,
+          activeTabId: tabId
+        };
+      }
+      return panel;
+    }));
+  };
+
+  const handleDragStart = (e: React.DragEvent, panelId: string, tabId: string) => {
+    e.dataTransfer.setData('panelId', panelId);
+    e.dataTransfer.setData('tabId', tabId);
     e.dataTransfer.effectAllowed = "move";
   };
 
@@ -54,19 +97,59 @@ function WorkspacePage() {
     e.dataTransfer.dropEffect = "move";
   };
 
-  const handleDrop = (e: React.DragEvent, targetTabId: string) => {
+  const handleDrop = (e: React.DragEvent, targetPanelId: string, targetTabId: string) => {
     e.preventDefault();
-    if (!draggedTabId || draggedTabId === targetTabId) return;
+    const sourcePanelId = e.dataTransfer.getData('panelId');
+    const sourceTabId = e.dataTransfer.getData('tabId');
 
-    const draggedTabIndex = tabs.findIndex(tab => tab.id === draggedTabId);
-    const targetTabIndex = tabs.findIndex(tab => tab.id === targetTabId);
+    if (sourcePanelId === targetPanelId && sourceTabId === targetTabId) return;
 
-    const newTabs = [...tabs];
-    const [draggedTab] = newTabs.splice(draggedTabIndex, 1);
-    newTabs.splice(targetTabIndex, 0, draggedTab);
+    setPanels(panels.map(panel => {
+      if (panel.id === sourcePanelId) {
+        const sourceTab = panel.tabs.find(tab => tab.id === sourceTabId);
+        if (!sourceTab) return panel;
+        return {
+          ...panel,
+          tabs: panel.tabs.filter(tab => tab.id !== sourceTabId)
+        };
+      }
+      if (panel.id === targetPanelId) {
+        const sourceTab = panels
+          .find(p => p.id === sourcePanelId)
+          ?.tabs.find(tab => tab.id === sourceTabId);
+        if (!sourceTab) return panel;
+        const targetTabIndex = panel.tabs.findIndex(tab => tab.id === targetTabId);
+        const newTabs = [...panel.tabs];
+        newTabs.splice(targetTabIndex, 0, sourceTab);
+        return {
+          ...panel,
+          tabs: newTabs
+        };
+      }
+      return panel;
+    }));
+  };
 
-    setTabs(newTabs);
-    setDraggedTabId(null);
+  const toggleSplitScreen = () => {
+    if (panels.length === 1) {
+      // Split into two panels
+      setPanels([
+        panels[0],
+        {
+          id: "2",
+          tabs: [{ id: Date.now().toString(), title: "New tab" }],
+          activeTabId: Date.now().toString()
+        }
+      ]);
+    } else {
+      // Merge back to single panel
+      setPanels([panels[0]]);
+    }
+  };
+
+  const closePanel = (panelId: string) => {
+    if (panels.length === 1) return;
+    setPanels(panels.filter(panel => panel.id !== panelId));
   };
 
   return (
@@ -81,7 +164,7 @@ function WorkspacePage() {
           >
             <ArrowLeftIcon className="w-6 h-6" />
           </Button>
-          <div className="justify-center flex items-center">
+          <div className="justify-center flex items-center ml-[400px]">
             <h1 className="font-normal text-xl text-black font-['Outfit',Helvetica]">
               WORKSPACE NAME
             </h1>
@@ -104,47 +187,72 @@ function WorkspacePage() {
           </div>
         </div>
         {/* Main content area */}
-        <div className="absolute w-full  top-[53px] left-1.5">
+        <div className="absolute w-full top-[53px] left-1.5">
           <div className="absolute w-full h-[1026px] top-0 left-0">
             {/* Main container */}
             <div className="absolute w-full h-[1026px] top-0 left-9 bg-white rounded-[8px_0px_0px_0px] border border-solid border-[#e2e2e2]">
-              {/* Tab bar */}
-              <div className="flex h-8 border-b border-[#e2e2e2] rounded-[8px_0px_0px_0px]">
-                {tabs.map((tab) => (
-                  <Tab
-                    key={tab.id}
-                    title={tab.title}
-                    tabId={tab.id}
-                    isActive={tab.id === activeTabId}
-                    onClose={() => closeTab(tab.id)}
-                    onClick={() => selectTab(tab.id)}
-                    onDragStart={handleDragStart}
-                    onDragOver={handleDragOver}
-                    onDrop={handleDrop}
-                  />
+              {/* Panels container */}
+              <div className={`flex h-full ${panels.length === 2 ? 'divide-x divide-[#e2e2e2]' : ''}`}>
+                {panels.map((panel) => (
+                  <div key={panel.id} className={`flex flex-col ${panels.length === 2 ? 'w-1/2' : 'w-full'}`}>
+                    {/* Tab bar */}
+                    <div className="flex h-8 border-b border-[#e2e2e2] rounded-[8px_0px_0px_0px]">
+                      <div className="flex h-8 border-b border-[#e2e2e2] rounded-[8px_0px_0px_0px] grow w-[calc(100%-100px)] overflow-hidden">
+                        <div className="flex h-8 overflow-x-auto w-full scrollbar-hide">
+                          {panel.tabs.map((tab) => (
+                            <Tab
+                              key={tab.id}
+                              title={tab.title}
+                              tabId={tab.id}
+                              isActive={tab.id === panel.activeTabId}
+                              onClose={() => closeTab(panel.id, tab.id)}
+                              onClick={() => selectTab(panel.id, tab.id)}
+                              onDragStart={(e) => handleDragStart(e, panel.id, tab.id)}
+                              onDragOver={handleDragOver}
+                              onDrop={(e) => handleDrop(e, panel.id, tab.id)}
+                            />
+                          ))}
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="p-1 h-7 self-center ml-1 flex-shrink-0"
+                            onClick={() => addTab(panel.id)}
+                          >
+                            <Plus />
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex self-center w-[100px] mr-7 flex-shrink-0">
+                        {panels.length === 2 ? (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="p-0 h-7 text-red-500 hover:text-red-600 hover:bg-red-50"
+                            onClick={() => closePanel(panel.id)}
+                          >
+                            <X className="w-6 h-6" />
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="p-0 h-7"
+                            onClick={toggleSplitScreen}
+                          >
+                            <ColumnsIcon className="w-6 h-6" />
+                          </Button>
+                        )}
+                        <Button variant="ghost" size="icon" className="p-0 h-7">
+                          <MoreHorizontalIcon className="w-6 h-6" />
+                        </Button>
+                      </div>
+                    </div>
+                    {/* Tab content */}
+                    <MainContent tabId={panel.activeTabId} />
+                  </div>
                 ))}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="p-1 h-8"
-                  onClick={addTab}
-                >
-                  <Plus />
-                </Button>
               </div>
-
-              {/* Tab content */}
-              <MainContent tabId={activeTabId} />
             </div>
-
-            {/* More options button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute top-2.5 left-[1885px] p-0 h-auto"
-            >
-              <MoreHorizontalIcon className="w-4 h-4" />
-            </Button>
 
             {/* Left sidebar */}
             <div className="absolute left-0 top-12 flex flex-col">

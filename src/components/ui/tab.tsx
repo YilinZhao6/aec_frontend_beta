@@ -39,7 +39,7 @@ export const Tab: React.FC<TabProps> = ({
       <Button
         variant="ghost"
         size="icon"
-        className="ml-2 p-0 h-auto"
+        className="ml-2 p-0 h-7"
         onClick={(e) => {
           e.stopPropagation();
           onClose();
