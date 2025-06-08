@@ -28,12 +28,12 @@ interface PanelData {
 function WorkspacePage() {
   const [panels, setPanels] = useState<PanelData[]>([
     {
-      id: "1",
+      id: Date.now().toString(),
       tabs: [{ id: "1", title: "New tab" }],
       activeTabId: "1"
     }
   ]);
-
+  console.log(panels);
   const addTab = (panelId: string) => {
     setPanels(panels.map(panel => {
       if (panel.id === panelId) {
@@ -136,7 +136,7 @@ function WorkspacePage() {
       setPanels([
         panels[0],
         {
-          id: "2",
+          id: Date.now().toString(),
           tabs: [{ id: Date.now().toString(), title: "New tab" }],
           activeTabId: Date.now().toString()
         }
