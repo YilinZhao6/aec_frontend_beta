@@ -33,7 +33,7 @@ export const Tab: React.FC<TabProps> = ({
         } ${Number(tabId) === 1 ? "rounded-[8px_8px_0px_0px]" : "rounded-[8px_8px_0px_0px]"}`}
       onClick={onClick}
     >
-      <span className="font-medium text-xs text-[#6b6b6b] font-['Inter',Helvetica]">
+      <span className="font-normal text-[13px] text-black font-['Inter',Helvetica] whitespace-nowrap overflow-hidden text-ellipsis">
         {title}
       </span>
       <Button

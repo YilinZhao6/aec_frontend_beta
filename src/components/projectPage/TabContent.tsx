@@ -14,9 +14,10 @@ import { Progress } from "../ui/progress";
 
 interface MainContentProps {
   tabId: string;
+  isSplit: boolean;
 }
 
-export const MainContent: React.FC<MainContentProps> = ({ tabId }) => {
+export const MainContent: React.FC<MainContentProps> = ({ isSplit }) => {
   // Data for AI tools
   const aiTools = [
     {
@@ -68,8 +69,8 @@ export const MainContent: React.FC<MainContentProps> = ({ tabId }) => {
   ];
 
   return (
-    <div className="flex flex-col items-center w-full  px-8">
-      <div className="max-w-[800px] pt-[70px]">
+    <div className="flex flex-col items-center w-full px-8">
+      <div className={`${isSplit ? 'w-full' : 'max-w-[800px]'} pt-[70px]`}>
         {/* Header with title and icon */}
         <div className="flex items-center mb-8 w-full -ml-[20px]">
           <img
@@ -83,11 +84,11 @@ export const MainContent: React.FC<MainContentProps> = ({ tabId }) => {
         </div>
 
         {/* AI Tools section */}
-        <div className="flex gap-4 mb-10">
+        <div className="flex flex-wrap gap-4 mb-10">
           {aiTools.map((tool, index) => (
             <Card
               key={index}
-              className="w-[158px] h-[138px] bg-[#ecf1f6] rounded-lg border-none"
+              className={`${isSplit ? 'w-[140px]' : 'w-[158px]'} h-[138px] bg-[#ecf1f6] rounded-lg border-none`}
             >
               <CardContent className="flex flex-col items-center justify-center h-full p-2 pt-5 pb-4">
                 {tool.icon === "/search.svg" && (
@@ -176,12 +177,12 @@ export const MainContent: React.FC<MainContentProps> = ({ tabId }) => {
           </div>
 
           {/* File grid */}
-          <div className="grid grid-cols-3 gap-x-10 gap-y-4 w-full">
+          <div className={`grid ${isSplit ? 'grid-cols-2' : 'grid-cols-3'} gap-x-4 gap-y-4 w-full`}>
             {lectureFiles.map((file, index) => (
               <Button
                 key={index}
                 variant="ghost"
-                className="h-[37px] bg-[#e7e7e780] w-[170px] rounded-lg px-3 py-2 flex items-center justify-start gap-2"
+                className={`h-[37px] bg-[#e7e7e780] ${isSplit ? 'w-[280px]' : 'w-full'} rounded-lg px-3 py-2 flex items-center justify-start gap-2`}
               >
                 <img
                   className="w-6 h-6"
