@@ -283,7 +283,7 @@ function WorkspacePage() {
               {workspaceTitle}
             </h1>
             <div className="ml-[15px] bg-[#ecf1f6] rounded-[5px] px-2 py-1">
-              <span className="font-medium text-[11px] text-[#6b6b6b] font-['Inter',Helvetica]">
+              <span className="font-medium text-[11px] text-[#6b6b6b] font-['Inter',Helvetica] flex items-center">
                 Workspace
               </span>
             </div>
