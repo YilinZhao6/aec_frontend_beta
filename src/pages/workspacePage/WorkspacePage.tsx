@@ -36,6 +36,7 @@ function WorkspacePage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [workspaceTitle, setWorkspaceTitle] = useState("WORKSPACE NAME");
+  const [dragOverPanelId, setDragOverPanelId] = useState<string | null>(null);
   const [windows, setWindows] = useState<WindowData[]>([
     {
       id: Date.now().toString(),
@@ -205,13 +206,21 @@ function WorkspacePage() {
     e.dataTransfer.effectAllowed = "move";
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDragOver = (e: React.DragEvent, panelId?: string) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
+    if (panelId) {
+      setDragOverPanelId(panelId);
+    }
+  };
+
+  const handleDragLeave = () => {
+    setDragOverPanelId(null);
   };
 
   const handleDrop = (e: React.DragEvent, targetPanelId: string, targetTabId: string) => {
     e.preventDefault();
+    setDragOverPanelId(null);
     const sourcePanelId = e.dataTransfer.getData('panelId');
     const sourceTabId = e.dataTransfer.getData('tabId');
 
@@ -224,7 +233,6 @@ function WorkspacePage() {
 
         if (!sourcePanel || !targetPanel) return window;
 
-        // if there is only one tab in the source panel, merge the source panel with the target panel
         if (sourcePanel.tabs.length === 1) {
           return {
             ...window,
@@ -236,10 +244,16 @@ function WorkspacePage() {
           };
         }
 
+        const isDroppingOnPanel = !targetPanel.tabs.some(tab => tab.id === targetTabId);
+        const targetTabIndex = isDroppingOnPanel
+          ? targetPanel.tabs.length
+          : targetPanel.tabs.findIndex(tab => tab.id === targetTabId);
+
         return {
           ...window,
           panels: window.panels.map(panel => {
             if (panel.id === sourcePanelId) {
+              if (panel.id === targetPanelId) return panel;
               const sourceTab = panel.tabs.find(tab => tab.id === sourceTabId);
               if (!sourceTab) return panel;
               return {
@@ -250,12 +264,12 @@ function WorkspacePage() {
             if (panel.id === targetPanelId) {
               const sourceTab = sourcePanel.tabs.find(tab => tab.id === sourceTabId);
               if (!sourceTab) return panel;
-              const targetTabIndex = panel.tabs.findIndex(tab => tab.id === targetTabId);
               const newTabs = [...panel.tabs];
               newTabs.splice(targetTabIndex, 0, sourceTab);
               return {
                 ...panel,
-                tabs: newTabs
+                tabs: newTabs,
+                activeTabId: sourceTab.id
               };
             }
             return panel;
@@ -321,7 +335,8 @@ function WorkspacePage() {
                                   onClose={() => closeTab(window.id, panel.id, tab.id)}
                                   onClick={() => selectTab(window.id, panel.id, tab.id)}
                                   onDragStart={(e) => handleDragStart(e, panel.id, tab.id)}
-                                  onDragOver={handleDragOver}
+                                  onDragOver={(e) => handleDragOver(e, panel.id)}
+                                  onDragLeave={handleDragLeave}
                                   onDrop={(e) => handleDrop(e, panel.id, tab.id)}
                                 />
                               ))}
@@ -362,7 +377,21 @@ function WorkspacePage() {
                             )}
                           </div>
                         </div>
-                        <MainContent tabId={panel.activeTabId} isSplit={window.panels.length === 2} />
+                        <div
+                          className="flex-1 relative"
+                          onDragOver={(e) => handleDragOver(e, panel.id)}
+                          onDragLeave={handleDragLeave}
+                          onDrop={(e) => handleDrop(e, panel.id, panel.activeTabId)}
+                        >
+                          {dragOverPanelId === panel.id && (
+                            <div className="absolute inset-0 bg-black/10 z-10 flex items-center justify-center">
+                              <div className="bg-white/90 px-4 py-2 rounded-md shadow-lg">
+                                <span className="text-sm text-gray-700">Drop tab here</span>
+                              </div>
+                            </div>
+                          )}
+                          <MainContent tabId={panel.activeTabId} isSplit={window.panels.length === 2} />
+                        </div>
                       </div>
                     ))}
                   </div>

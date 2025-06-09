@@ -10,6 +10,7 @@ interface TabProps {
   onClick: () => void;
   onDragStart: (e: React.DragEvent, tabId: string) => void;
   onDragOver: (e: React.DragEvent) => void;
+  onDragLeave: () => void;
   onDrop: (e: React.DragEvent, tabId: string) => void;
 }
 
@@ -21,6 +22,7 @@ export const Tab: React.FC<TabProps> = ({
   onClick,
   onDragStart,
   onDragOver,
+  onDragLeave,
   onDrop
 }) => {
   return (
@@ -28,6 +30,7 @@ export const Tab: React.FC<TabProps> = ({
       draggable
       onDragStart={(e) => onDragStart(e, tabId)}
       onDragOver={onDragOver}
+      onDragLeave={onDragLeave}
       onDrop={(e) => onDrop(e, tabId)}
       className={`flex items-center h-8 px-4 border-r border-[#e2e2e2] cursor-pointer ${isActive ? "bg-white" : "bg-[#f5f5f5]"
         } ${Number(tabId) === 1 ? "rounded-[8px_8px_0px_0px]" : "rounded-[8px_8px_0px_0px]"}`}
