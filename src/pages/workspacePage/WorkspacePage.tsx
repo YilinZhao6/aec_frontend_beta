@@ -13,7 +13,9 @@ import { Button } from "../../components/ui/button";
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Tab } from '../../components/ui/tab';
-import { MainContent } from '../../components/projectPage/TabContent';
+
+import { DefaultContent } from '../../components/projectPage/DefaultContent';
+
 
 interface TabData {
   id: string;
@@ -390,7 +392,8 @@ function WorkspacePage() {
                               </div>
                             </div>
                           )}
-                          <MainContent tabId={panel.activeTabId} isSplit={window.panels.length === 2} />
+                          <DefaultContent tabId={panel.activeTabId} isSplit={window.panels.length === 2} />
+
                         </div>
                       </div>
                     ))}
