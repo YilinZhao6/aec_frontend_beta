@@ -143,7 +143,7 @@ export const MainContent: React.FC<MainContentProps> = ({ isSplit }) => {
 
         {/* Recent files section */}
         <div className="mb-4 ">
-          <div className="flex items-center justify-between mb-4 pr-[30px]">
+          <div className={`flex items-center justify-between mb-4 ${isSplit ? 'pr-[36px]' : ''}`}>
             <h3 className="font-medium text-xl text-black font-outfit tracking-[-0.07px]">
               Recent
             </h3>
@@ -209,6 +209,6 @@ export const MainContent: React.FC<MainContentProps> = ({ isSplit }) => {
 
 
       </div>
-    </div>
+    </div >
   );
 };
