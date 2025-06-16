@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,7 +12,9 @@ body {
   font-family: 'Quicksand', sans-serif;
 }
 
-
+.font-outfit {
+  font-family: 'Outfit', sans-serif;
+}
 
 @layer base {
   :root {
@@ -67,8 +71,6 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
-
-
 
 @layer base {
   * {

@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../../ui/button';
 
+
 function Sidebar() {
   // Data for sidebar navigation items
   const mainNavItems = [
@@ -31,6 +32,7 @@ function Sidebar() {
     { label: "Start Deep Research", icon: <BrainCircuitIcon className="w-4 h-4" /> },
   ];
 
+
   // Data for bottom navigation items
   const bottomNavItems = [
     { icon: <SettingsIcon className="w-4 h-4" />, label: "Account Settings" },
@@ -40,25 +42,25 @@ function Sidebar() {
   ];
 
   return (
-    <div className="w-[190px] flex flex-col pt-[23px] pb-[30px] space-y-6">
+    <div className="w-[190px] flex flex-col pt-[23px] pl-[16px] pb-[30px] space-y-6 ">
       {/* Logo */}
-      <div className="flex items-center gap-2 px-4">
+      <div className="flex items-center gap-2">
         <img
           className="w-[34px] h-[29px]"
           alt="Hyperknow logo"
           src="/main/landing_page/hyperknow_logo 1.svg"
         />
-        <span className="font-['Quicksand',Helvetica] font-normal text-[20px]">
+        <span className="font-['Quicksand',Helvetica] font-normal text-[20px] ">
           Hyperknow
         </span>
       </div>
 
       {/* Main navigation */}
-      <nav className="flex flex-col space-y-1">
+      <nav className="flex flex-col space-y-1 px-[10px] ">
         {mainNavItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center gap-2 hover:bg-white transition-colors px-4 py-[0.3rem] rounded-md cursor-pointer mx-2"
+            className="flex items-center gap-2 hover:bg-white transition-colors px-2 py-[0.3rem] rounded-md cursor-pointer"
           >
             {item.icon}
             <span className="font-['IBM_Plex_Sans',Helvetica] text-[14px]">
@@ -69,8 +71,8 @@ function Sidebar() {
       </nav>
 
       {/* Quick Actions */}
-      <div className="px-4">
-        <h3 className="font-['IBM_Plex_Sans',Helvetica] font-medium text-xs mt-6 mb-2">
+      <div>
+        <h3 className="font-['IBM_Plex_Sans',Helvetica] font-medium text-xs mt-6 ml-3">
           Quick Actions
         </h3>
         {quickActions.map((action, index) => (
@@ -89,11 +91,11 @@ function Sidebar() {
 
       {/* Bottom navigation - pushed to bottom with flex-grow */}
       <div className="flex-grow"></div>
-      <nav className="flex flex-col gap-2">
+      <nav className="flex flex-col gap-2 px-[3px]">
         {bottomNavItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center gap-2 hover:bg-white transition-colors px-4 py-[0.3rem] rounded-md cursor-pointer mx-2"
+            className="flex items-center gap-2 hover:bg-white transition-colors px-2 py-[0.3rem] rounded-md cursor-pointer"
           >
             {item.icon}
             <span className="font-['IBM_Plex_Sans',Helvetica] text-[14px]">
@@ -103,7 +105,7 @@ function Sidebar() {
         ))}
       </nav>
     </div>
-  );
+  )
 }
 
-export default Sidebar;
+export default Sidebar

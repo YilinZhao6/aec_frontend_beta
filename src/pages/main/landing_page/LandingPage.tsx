@@ -69,6 +69,7 @@ function LandingPage() {
     setTabPosition();
   }, [activeTabIndex]);
 
+
   const handleCreateWorkspace = (data: any) => {
     console.log('Creating workspace with data:', data);
     setIsModalOpen(false);
@@ -76,48 +77,54 @@ function LandingPage() {
 
   return (
     <div className="flex bg-[#f7f6f6] min-h-screen">
+
       <Sidebar />
       <main className="flex-1 flex flex-col">
-        <header className="h-14 px-6 flex items-center justify-between border-b border-gray-100">
-          <p className="font-['IBM_Plex_Sans',Helvetica] text-lg ml-4">My Workspaces</p>
-          <div className='flex items-center gap-3'>
-            <button className="p-1.5 hover:scale-105 transition-transform">
-              <Languages className="w-5 h-5" />
-            </button>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="rounded-[20px] border-[#bcbcbc] h-9 px-2"
-                >
-                  <div className="flex items-center gap-2 bg-transparent">
-                    <Avatar className="w-6 h-6">
-                      <AvatarImage
-                        src="/main/landing_page/avatars.png"
-                        alt="John Doe"
-                      />
-                      <AvatarFallback>JD</AvatarFallback>
-                    </Avatar>
-                    <span className="font-['IBM_Plex_Sans',Helvetica] text-sm">
-                      John Doe
-                    </span>
-                    <ChevronDownIcon className="w-3.5 h-3.5" />
-                  </div>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className='dropdown-content'>
-                <DropdownMenuItem className='dropdown-item'>Profile</DropdownMenuItem>
-                <DropdownMenuItem className='dropdown-item'>Settings</DropdownMenuItem>
-                <DropdownMenuItem className='dropdown-item'>Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+        <header className="header">
+          <div className="header-actions">
+            <p className="font-['IBM_Plex_Sans',Helvetica] text-[22px]"> My Workspaces</p>
+            <div className='flex justify-between gap-3'>
+              <button className="p-2 hover:scale-105 transition-transform">
+                <Languages className="w-6 h-6" />
+              </button>
+
+              <DropdownMenu >
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="rounded-[20px] border-[#bcbcbc] h-[45px] px-2"
+                  >
+                    <div className="flex items-center gap-3 bg-transparent">
+                      <Avatar className="w-[30px] h-[30px] ">
+                        <AvatarImage
+                          src="/main/landing_page/avatars.png"
+                          alt="John Doe"
+                        />
+                        <AvatarFallback>JD</AvatarFallback>
+                      </Avatar>
+                      <span className="font-['IBM_Plex_Sans',Helvetica] text-base">
+                        John Doe
+                      </span>
+                      <ChevronDownIcon className="w-4 h-4" />
+                    </div>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className='dropdown-content'>
+                  <DropdownMenuItem className='dropdown-item'>Profile</DropdownMenuItem>
+                  <DropdownMenuItem className='dropdown-item'>Settings</DropdownMenuItem>
+                  <DropdownMenuItem className='dropdown-item'>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
           </div>
         </header>
 
         <Card className="flex-1 rounded-tl-[20px] rounded-tr-none rounded-br-none rounded-bl-none shadow-none border-none">
           <div className="flex justify-between p-4">
-            <div className="flew-row relative flex h-auto p-3 rounded-3xl bg-transparent px-2 backdrop-blur-sm">
+            {/* Tabs */}
+            <div className="flew-row relative  flex h-auto p-3 rounded-3xl bg-transparent px-2 backdrop-blur-sm">
               <span
                 className="absolute bottom-0 top-0 -z-10 flex overflow-hidden rounded-3xl py-2 transition-all duration-300"
                 style={{ left: tabUnderlineLeft, width: tabUnderlineWidth }}
@@ -125,6 +132,7 @@ function LandingPage() {
                 <span className="h-full w-full rounded-3xl bg-[#D9D9D9]" />
               </span>
               {allTabs.map((tab, index) => {
+
                 return (
                   <button
                     key={index}
@@ -137,6 +145,7 @@ function LandingPage() {
                 );
               })}
             </div>
+            {/* Action buttons */}
             <div className="flex items-center gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -188,7 +197,7 @@ function LandingPage() {
                 <input
                   type="text"
                   placeholder="Search projects..."
-                  className="h-full w-full bg-white border-[#949494] rounded-lg pl-8 pr-2 text-sm text-gray-600"
+                  className="h-full w-full bg-white border-[#949494] rounded-lg pl-8 pr-2"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -207,11 +216,11 @@ function LandingPage() {
                   { title: "New Folder", onClick: () => console.log("New Folder") },
                   { title: "New Document", onClick: () => console.log("New Document") }
                 ]}
-                className="[&>button]:bg-[#0064A2]"
               />
             </div>
           </div>
 
+          {/* Content sections */}
           <ProjectDirectory
             selectedProject={selectedProject}
             selectedTime={selectedTime}
@@ -219,6 +228,7 @@ function LandingPage() {
             activeTab={activeTabIndex !== null ? allTabs[activeTabIndex].id : "project-directory"}
           />
         </Card>
+
       </main>
 
       <CreateWorkspaceModal

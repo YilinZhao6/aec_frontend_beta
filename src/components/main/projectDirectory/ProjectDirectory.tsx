@@ -120,7 +120,7 @@ function ProjectDirectory({ selectedProject, selectedTime, searchQuery, activeTa
               <div
                 className="w-full h-full bg-cover bg-center"
                 style={{ backgroundImage: `url(${project.backgroundImage})`, cursor: 'pointer' }}
-                onClick={() => navigate('/workspace')}
+                onClick={() => navigate(`/workspace?title=${encodeURIComponent(project.title)}`)}
               >
                 <div className="absolute bottom-0 left-0 w-full">
                   <div className="w-full h-[53px] bg-white">

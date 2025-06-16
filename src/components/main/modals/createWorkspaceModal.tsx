@@ -87,14 +87,14 @@ const CreateWorkspaceModal = ({ isOpen, onClose, onSubmit }: CreateWorkspaceModa
     <div className="modal-overlay">
       <div className="relative w-[700px] h-[500px] mx-auto bg-white rounded-[10px] overflow-hidden">
         <div className="absolute right-4 top-4 z-10">
-          <button 
-            className="p-1.5 hover:bg-gray-100 rounded-full transition-colors" 
+          <button
+            className="p-1.5 hover:bg-gray-100 rounded-full transition-colors"
             onClick={onClose}
           >
             <X className="w-5 h-5" />
           </button>
         </div>
-        
+
         <div className="w-[600px] mx-auto h-[calc(100%-60px)] overflow-y-auto py-8 px-4 font-['IBM Plex Sans'] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
           <div className="flex flex-col items-center mb-6">
             <h2 className="text-2xl font-['IBM Plex Sans'] font-normal text-black">
@@ -194,11 +194,10 @@ const CreateWorkspaceModal = ({ isOpen, onClose, onSubmit }: CreateWorkspaceModa
               {coverImages.map((image) => (
                 <div
                   key={image.id}
-                  className={`relative aspect-[3/2] cursor-pointer overflow-hidden rounded-[5px] ${
-                    formData.coverImage === image.src 
-                      ? 'ring-2 ring-[#80A5E4] ring-offset-1' 
+                  className={`relative aspect-[3/2] cursor-pointer overflow-hidden rounded-[5px] ${formData.coverImage === image.src
+                      ? 'ring-2 ring-[#80A5E4] ring-offset-1'
                       : ''
-                  }`}
+                    }`}
                   onClick={() => handleInputChange('coverImage', image.src)}
                 >
                   <img
