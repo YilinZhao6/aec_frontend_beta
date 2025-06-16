@@ -15,6 +15,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Tab } from '../../components/ui/tab';
 
 import { DefaultContent } from '../../components/projectPage/DefaultContent';
+import DeepLearn from './components/DeepLearn';
 
 
 interface TabData {
@@ -317,9 +318,9 @@ function WorkspacePage() {
           </div>
         </div>
 
-        <div className="absolute w-full top-[53px] left-1.5">
-          <div className="absolute w-full h-[1026px] top-0 left-0">
-            <div className="absolute w-[calc(100%-38px)] h-[1026px] top-0 left-9 bg-white rounded-[8px_0px_0px_0px] border border-solid border-[#e2e2e2]">
+        <div className="absolute w-full top-[53px] left-1.5 ">
+          <div className="absolute w-full h-[1026px] top-0 left-0 border-b-none">
+            <div className="absolute w-[calc(100%-38px)] h-[1026px] top-0 left-9 bg-white rounded-[8px_0px_0px_0px] border border-solid border-[#e2e2e2] border-b-0">
               {windows.map((window) => (
                 <div key={window.id} className={`${window.isActive ? 'block' : 'hidden'}`}>
                   <div className={`flex h-full ${window.panels.length === 2 ? 'divide-x divide-[#e2e2e2]' : ''}`}>
@@ -380,7 +381,7 @@ function WorkspacePage() {
                           </div>
                         </div>
                         <div
-                          className="flex-1 relative"
+                          className="flex-1 relative  "
                           onDragOver={(e) => handleDragOver(e, panel.id)}
                           onDragLeave={handleDragLeave}
                           onDrop={(e) => handleDrop(e, panel.id, panel.activeTabId)}
@@ -392,7 +393,7 @@ function WorkspacePage() {
                               </div>
                             </div>
                           )}
-                          <DefaultContent tabId={panel.activeTabId} isSplit={window.panels.length === 2} />
+                          <DeepLearn />
 
                         </div>
                       </div>
